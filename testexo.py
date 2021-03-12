@@ -8,35 +8,32 @@ Création: admin, le 09/03/2021
 # Imports
 import sqlite3  #importation du module sqlite3
 
-# Fonctions 
+# Fonctions
+
+
 def get_bdd(numero, niv):
-    cnx = sqlite3.connect('DVmath_exercice.db') #acces base de donnée
+    cnx = sqlite3.connect('DVmath_exercice.db')  #acces base de donnée
     cursor = cnx.cursor()
-
-    identifiant = numero
-    niveau = niv
-
-    request_val = "SELECT exercice FROM creat_exo WHERE numero = ? and niveau = ?", identifiant, niveau  #avec variables
-    #data = (exo, result, niv)
-    request_val = str(request_val)
-    cursor.execute(request_val)
+    request_val = "SELECT exercice FROM creat_exo WHERE numero = ? and niveau = ?"  #requete
+    data = (numero, niv)
+    cursor.execute(request_val, data)
     resultat = cursor.fetchall()  #afficher plusieurs donnée en tableau
+    print(resultat)  #affiche le resultat de la requete
     cnx.commit()
     cursor.close()
     cnx.close()
 
-
     print("Acces BDD Réussi !")
-    print(resultat)
+
 
 # Programme principal
+
+
 def main():
 
-    num1 = input()
-    num2 = input()
+    num1 = 4
+    num2 = 5
     get_bdd(num1, num2)
-
-
 
 
 if __name__ == '__main__':
