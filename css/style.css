@@ -1,0 +1,134 @@
+
+
+/*fichier index.html*/
+.bandeau_haut{
+    background-color: #5d8cb0;
+    padding: 1%;
+    color: white;
+}
+
+/*Connexion sur index.html*/
+
+.simple-login-container{
+    width:25%;
+    max-width:100%;
+    margin:50px auto;
+}
+.simple-login-container h2{
+    text-align:center;
+    font-size:20px;
+}
+ 
+.simple-login-container .btn-login{
+    background-color:#5d8cb0;
+    color:#fff;
+}
+a{
+    color:#fff;
+}
+ 
+.form-group2{
+    background-color:#5d8cb0;
+    font-size: 18px;
+    border: none;
+    color: black;
+    padding: 10px;
+    padding-bottom: 0px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 10px 2px;
+    border-radius: 0.5rem;
+}
+
+/*sur menu.html bilan_prof.html new_exo.html*/
+/*pour le groupe de boutons menu*/
+
+.groupe_de_boutons{
+    margin: 1% 15%;
+}
+
+.bouton_1{
+    background-color: #1665a1;
+    border: none;
+    padding: 5% 10% 2% 10%;
+}
+.bouton_1:hover{
+background-color: #b0b3b5 ;
+}
+
+.bouton_2{
+    background-color: #3f759e;
+    border: none;
+    padding: 5% 10% 2% 10%;
+}
+.bouton_2:hover{
+    background-color: #b0b3b5 ;
+    }
+
+.bouton_3{
+   background-color:#569cd1;
+   border: none;
+   padding: 5% 10% 2% 10%;
+}
+.bouton_3:hover{
+    background-color: #b0b3b5 ;
+    }
+
+/*page new_exo.html*/
+/*formulaire et tableau*/
+
+.champs1
+{
+background-color:white ;
+padding-top: 15px;
+color: #1665a1;
+}
+
+.simple-login-container2{
+    width:300px;
+    max-width:100%;
+    margin:50px auto;
+}
+.simple-login-container h2{
+    text-align:center;
+    font-size:20px;
+}
+ 
+.simple-login-container2 .btn-login2{
+    background-color:#1665a1;
+    color:#fff;
+}
+
+ 
+@media ( min-width: 768px ) {
+    .grid-divider {
+        position: relative;
+        padding: 0;
+    }
+    .grid-divider>[class*='col-'] {
+        position: static;
+    }
+    /*.grid-divider>[class*='col-']:nth-child(n+2):before {
+        content: "";
+        border-left: 1px solid #2dc7cc;
+        position: absolute;
+        top: 0;
+        bottom: 15px;
+    }*/
+    .col-padding {
+        padding: 0 15px 15px;
+    }
+}
+ 
+.tableauxajouterexo{
+    border-collapse: collapse;
+    min-width: 1200px;
+    width: auto;
+    box-shadow: 0 5px 50px rgba(0,0,0,0,15);
+    cursor: pointer;
+    margin: 100px auto;
+    border: 2px solid gray;
+}
+
+

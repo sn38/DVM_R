@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DV-Maths</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="js/bootstrap.min.js">
+    <link rel="stylesheet" href="index.html">
+</head>
+<body>
+    <!----Header---->
+    <div class="container-fluid bandeau_haut">
+        <h1>DV-MATH</h1>
+        <p>La calculatrice à cellules braille pour deficients visuels...</p>
+    </div>
+    <!----Fin header---->
+
+    <!----Menu---->
+    <div class="btn-group btn-group-toggle groupe_de_boutons" data-toggle="buttons">
+        <label class="btn btn-secondary bouton_1">
+            <a class="bouton_index" href="index.html"><p>Déconnexion</p></a>
+        </label>
+        <label class="btn btn-secondary bouton_2">
+            <a class="bouton_index" href="new_exo.html"><p>Ajouter un exercice</p></a>
+        </label>
+        <label class="btn btn-secondary bouton_3 ">
+            <a class="bouton_index" href="bilan_prof.html"><p>Bilan professeurs</p></a>
+        </label>
+      </div>
+    <!----Fin menu---->
+
+    <!----Debut formulaire et tableau---->
+    <div class="col-md-9 container champs1">
+        <div class="container">
+            <h2 class="titre_H2">Ajouter un exercice</h2>
+            <div class="row grid-divider">
+                <div class="col-sm-3">
+                    <div class="col-padding">
+                        <from method="POST" action="">
+                            <div class="simple-login-container2 ">
+                                
+                                <div class="row">
+                                    <div class="col-md-12 form-group">
+                                        <input type="text" class="form-control" placeholder="Numéro">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 form-group">
+                                        <input type="text" class="form-control" placeholder="Calcul">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 form-group">
+                                        <input type="text" class="form-control" placeholder="Résultat">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 form-group">
+                                        <input type="password" placeholder="Niveau" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 form-group3">
+                                        <input type="submit" class="btn btn-block btn-login2" placeholder="Enter your Password" value="Enregistrer" >
+                                    </div>
+                                </div>
+                                <div class="row">
+                                   
+                                </div>
+                            </div>                        
+                        </from>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="col-padding">
+                    <!--- du texte -->
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="col-padding">
+                    <!--- du texte -->
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="col-padding">
+                    <!--- du texte -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+        <table class="tableauxajouterexo">
+            <thead>
+                <tr>
+                    <th>Numéro exercice</th>
+                    <th>Calcul</th>
+                    <th>Résultat</th>
+                    <th>Niveau</th>
+                </tr>
+            </thead>
+ 
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>52/2</td>
+                    <td>26</td>
+                    <td>5(ème)</td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+           
+   </div>
+
+<!----fin formulaire et tableau-->
+
+</body>
+</html>
