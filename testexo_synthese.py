@@ -6,7 +6,9 @@ Création: admin, le 09/03/2021
 
 
 # Imports
+from espeakng import ESpeakNG
 import sqlite3  #importation du module sqlite3
+
 
 # Fonctions
 
@@ -22,6 +24,7 @@ def get_bdd(numero, niv):
     cnx.commit()
     cursor.close()
     cnx.close()
+    return (resultat)
 
 
 def get_bdd_list_exo(niv):
@@ -53,11 +56,17 @@ def enter_you_name():
 # Programme principal
 
 def main():
+    esng = ESpeakNG(voice='fr')
+
 
     niveau = enter_you_name()  #récupere le niveau entrer par l'élève
     num1 = 1  #le numero de l'exercice
     print("-----------------------------------------------")
-    get_bdd(num1, niveau)  #execution de la fonction qui va afficher un exercice choisi en fonction du niveau
+    exo = get_bdd(num1, niveau)  #execution de la fonction qui va afficher un exercice choisi en fonction du niveau
+
+    exo = str(exo)
+    esng.say(exo)
+
     print("-----------------------------------------------")
     get_bdd_list_exo(niveau)  #execution de la fonction qui va afficher l'integralité des exercice concerné par le niveau
 
