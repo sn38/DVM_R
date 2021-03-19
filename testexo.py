@@ -50,14 +50,25 @@ def enter_you_name():
     return result  #renvoie le niveau entrer par l'élève
 
 
+def choisir_exo():
+    i = input("Quel exercice souhaitez vous réaliser ? > ")
+    if i not in range(999):
+        print("Vous avez choisi l'exercice", i)
+    else:
+        print("Erreur")
+
+    return i  #renvoie l'exercice entrer par l'élève
+
+
 # Programme principal
 
 def main():
 
     niveau = enter_you_name()  #récupere le niveau entrer par l'élève
-    num1 = 1  #le numero de l'exercice
     print("-----------------------------------------------")
-    get_bdd(num1, niveau)  #execution de la fonction qui va afficher un exercice choisi en fonction du niveau
+    i = choisir_exo() #récupere l'exercice entrer par l'élève
+    print("-----------------------------------------------")
+    get_bdd(i, niveau)  #execution de la fonction qui va afficher un exercice choisi en fonction du niveau
     print("-----------------------------------------------")
     get_bdd_list_exo(niveau)  #execution de la fonction qui va afficher l'integralité des exercice concerné par le niveau
 
