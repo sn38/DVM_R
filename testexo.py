@@ -51,6 +51,7 @@ def enter_you_name():
 
 
 def choisir_exo():
+
     i = input("Quel exercice souhaitez vous réaliser ? > ")
     if i not in range(999):
         print("Vous avez choisi l'exercice", i)
@@ -58,6 +59,16 @@ def choisir_exo():
         print("Erreur")
 
     return i  #renvoie l'exercice entrer par l'élève
+
+
+def pose_calcul(i):
+    a = input("Ecrire le calcul > ")
+    if a == i:
+        print("Vous avez correctement ecrit le calcul : ", a)
+    else:
+        print("Erreur")
+
+    return a
 
 
 # Programme principal
@@ -70,7 +81,8 @@ def main():
     print("-----------------------------------------------")
     get_bdd(i, niveau)  #execution de la fonction qui va afficher un exercice choisi en fonction du niveau
     print("-----------------------------------------------")
-    get_bdd_list_exo(niveau)  #execution de la fonction qui va afficher l'integralité des exercice concerné par le niveau
+    a = pose_calcul(i)
+    #get_bdd_list_exo(niveau)  #execution de la fonction qui va afficher l'integralité des exercice concerné par le niveau
 
 
 if __name__ == '__main__':
