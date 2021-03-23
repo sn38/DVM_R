@@ -8,6 +8,7 @@ Création: admin, le 09/03/2021
 # Imports
 from espeakng import ESpeakNG
 import sqlite3  #importation du module sqlite3
+import os
 
 
 # Fonctions
@@ -65,7 +66,9 @@ def main():
     exo = get_bdd(num1, niveau)  #execution de la fonction qui va afficher un exercice choisi en fonction du niveau
 
     exo = str(exo)
-    esng.say(exo)
+    #commande = "espeak-ng -a 200 -v mb-fr1 -s 150 '" + exo + "' --stdout | aplay
+    os.system("espeak-ng -a 200 -v mb-fr1 -s 150 \"%s\" --stdout | aplay" %exo)
+    #esng.say(exo)
 
     print("-----------------------------------------------")
     get_bdd_list_exo(niveau)  #execution de la fonction qui va afficher l'integralité des exercice concerné par le niveau
