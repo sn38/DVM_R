@@ -33,16 +33,35 @@ a{
     border: none;
     color: black;
     padding: 10px;
-    padding-bottom: 0px;
+    padding-bottom: 0px;s
     text-align: center;
     text-decoration: none;
     display: inline-block;
     margin: 10px 2px;
     border-radius: 0.5rem;
 }
+.tacos{
+    background-color:#5d8cb0;
+    font-size: 18px;
+    border: none;
+    color:white;
+    padding: 10px;
+    padding-bottom: 10px;
+    padding-left: 30%;
+    padding-right: 40%;
+    margin-left: 8%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+   
+    border-radius: 0.5rem;
+}
 
 /*sur menu.html bilan_prof.html new_exo.html*/
 /*pour le groupe de boutons menu*/
+.algerienne{
+    padding-left: 15%;
+}
 
 .groupe_de_boutons{
     margin: 1% 15%;
@@ -132,3 +151,29 @@ color: #1665a1;
 }
 
 
+/* Bilan Professeur */
+
+.textexo {
+    padding-top: 5%;
+    padding-left: 15%;
+	word-spacing: 15px; 
+    color: #706c6c;
+    padding-bottom: 10%;
+
+}
+
+
+tr, td
+{
+border: 1px solid black;
+
+border-collapse: collapse;
+
+padding: 50px;
+}
+
+.ligne1{
+
+    background-color:#b2cad4;
+    color:black;
+}
