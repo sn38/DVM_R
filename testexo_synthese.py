@@ -6,9 +6,9 @@ Création: admin, le 09/03/2021
 
 
 # Imports
-#from espeakng import ESpeakNG
+#from espeakng import ESpeakNG #plus utile
 import sqlite3  #importation du module sqlite3
-import os
+#import os #plus utile
 import subprocess
 
 
@@ -72,7 +72,9 @@ def main():
     #os.system("espeak-ng -a 200 -v mb-fr1 -s 150 \"%s\" --stdout | aplay" %exo)
     commande = "espeak-ng -a 200 -v mb-fr1 -s 150 " + "\"" + exo + "\"" + " --stdout | aplay"
     print(commande)
-    code_retour = subprocess.run(commande, shell=True)
+    resultat_exec= subprocess.run(commande, shell=True)
+    print(resultat_exec.returncode)
+    print(resultat_exec.stderr)
     #esng.say(exo)
 
     print("-----------------------------------------------")
