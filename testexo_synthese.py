@@ -73,8 +73,13 @@ def main():
     commande = "espeak-ng -a 200 -v mb-fr1 -s 150 " + "\"" + exo + "\"" + " --stdout | aplay"
     print(commande)
     resultat_exec= subprocess.run(commande, shell=True)
-    print(resultat_exec.returncode)
-    print(resultat_exec.stderr)
+    if(resultat_exec.returncode != 0):
+        print("Erreur dans l'execution")
+    else:
+        print("Execution reussie")
+
+    #print(resultat_exec.returncode)
+    #print(resultat_exec.stderr)
     #esng.say(exo)
 
     print("-----------------------------------------------")
