@@ -19,7 +19,7 @@ def main():
     resistances = [elt['resistance'] for elt in caracteres]     #liste des valeurs de résistances
 
     dict_complet = dict(zip(resistances, caracteres))           #création du dictionnaire (association liste résistances à caractères
-    print(dict_complet['175']['caractere'])
+    print(dict_complet['170']['caractere'])                     #affichage caractère à une valeur de résistance
 
 
 if __name__ == '__main__':
