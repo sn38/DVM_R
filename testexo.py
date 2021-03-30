@@ -22,16 +22,16 @@ def affiche_calcul_bdd(numero, niv):
     cursor.close()
     cnx.close()
 
-    calcul_bdd = ''.join(resultat[0]) #conversion de la valeur à l'indice 0 du tuple en chaîne de caractères
-    print("calcul propose:", calcul_bdd) #affiche le resultat de la requete
+    calcul_bdd = ''.join(resultat[0])  #conversion de la valeur à l'indice 0 du tuple en chaîne de caractères
+    print("calcul propose:", calcul_bdd)  #affiche le resultat de la requete
 
-    return calcul_bdd #renvoie le calcule
+    return calcul_bdd #renvoie le calcul
 
 def affiche_resultat_bdd(numero):
     cnx = sqlite3.connect('DVmath_exercice.db')  #acces base de donnée
     cursor = cnx.cursor()
     request_val = "SELECT resultat FROM creat_exo WHERE numero = ?"  #requete
-    data = (numero)
+    data = str(numero)  #int
     cursor.execute(request_val, data)
     resultat = cursor.fetchall()  #afficher plusieurs donnée en tableau
     cnx.commit()
@@ -46,7 +46,7 @@ def affiche_resultat_bdd(numero):
 def enter_you_name():
     answer = "Dupond"
     answer1 = "Pierre"
-    answer2 = 4
+    answer2 = 4  #le niveau de l'élève
     result_niv = answer2
     if answer2 == "6" or "5" or "4" or "3":
         print("Elève :", answer, answer1, result_niv, "ème")
@@ -55,9 +55,8 @@ def enter_you_name():
 
 
 def choisir_exo():
-
-    print("Quel exercice souhaitez vous réaliser ? > ")
     num_exo = 2
+    print("Quel exercice souhaitez vous réaliser ? > ", num_exo)
     if num_exo in range(999):
         print("Vous avez choisi l'exercice", num_exo) #va affciher le numéro de l'exercice definis
     else:
@@ -76,9 +75,10 @@ def pose_calcul(calcul_p):
 
     return calcul_pose
 
+
 def pose_resultat(resultat_p):
-    resultat_pose = input("Poser le resultat >")
-    if resultat_pose == resultat_p:
+    resultat_pose = input("Poser le resultat > ")
+    if resultat_pose == resultat_p:  #va comparer le resultat poser par le resultat absolu
         print("Vous avez correctement posé le resultat : ", resultat_pose)
     else:
         print("Erreur")
@@ -90,18 +90,18 @@ def pose_resultat(resultat_p):
 def main():
 
     niveau = enter_you_name()  #récupere le niveau entrer par l'élève
-    print("-----------------------------------------------")
 
+    print("--------------------Numero d'exercice choisi--------------------")
     numero_exo = choisir_exo()  #récupere le numero exercice entrer par l'élève
-    print("-----------------------------------------------")
 
+    print("----------------------Ennoncé exercice--------------------------")
     calcul_propose = affiche_calcul_bdd(numero_exo, niveau)   #affiche un exercice choisi en fonction du niveau et du numero d'exercice
-    print("-----------------------------------------------")
 
-    pose_calcul(calcul_propose) #demande le calcul a recopier et verifie si il a correctement été poser
-    print("-----------------------------------------------")
+    print("--------------------Pose et énoncé du calcul--------------------")
+    pose_calcul(calcul_propose)  #demande le calcul a recopier et verifie si il a correctement été poser
 
-    resultat_calcul = affiche_resultat_bdd(str(numero_exo))
+    print("---------------------Pose et énoncé resultat--------------------------")
+    resultat_calcul = affiche_resultat_bdd(numero_exo)
     pose_resultat(resultat_calcul)
 
 
