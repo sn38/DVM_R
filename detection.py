@@ -12,14 +12,14 @@ import csv
 
 # Programme principal
 def main():
-    with open('caracteres2.csv', mode='r') as f:                #https://www.youtube.com/watch?v=Hu4I3GAAOmA
-        dialect = csv.Sniffer().sniff(f.readline())
-        f.seek(0)
-        caracteres = list(csv.DictReader(f, dialect=dialect))
-    resistances = [elt['resistance'] for elt in caracteres]
+    with open('caracteres2.csv', mode='r') as f:                #ouverture fichier csv en lecture         #https://www.youtube.com/watch?v=Hu4I3GAAOmA
+        dialect = csv.Sniffer().sniff(f.readline())             #objet recap infos fichier csv (détermination séparateur sur ligne 0)
+        f.seek(0)                                               #retour à première ligne
+        caracteres = list(csv.DictReader(f, dialect=dialect))   #importation données sous forme liste
+    resistances = [elt['resistance'] for elt in caracteres]     #liste des valeurs de résistances
 
-    dict_complet = dict(zip(resistances, caracteres))
-    print(dict_complet['175'])
+    dict_complet = dict(zip(resistances, caracteres))           #création du dictionnaire (association liste résistances à caractères
+    print(dict_complet['175']['caractere'])
 
 
 if __name__ == '__main__':
