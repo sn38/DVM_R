@@ -29,8 +29,9 @@
         <label class="btn btn-secondary bouton_3 ">
             <a class="bouton_index" href="bilan_prof.php"><p>Bilan professeurs</p></a>
         </label>
-      </div>
+     
     <!----Fin menu---->
+    
     <?php
 	$db_servername  = "localhost";
 	$db_username = "root";
@@ -48,33 +49,36 @@
                 $Resultat = $_POST['Resultat'];
                 $Niveau = $_POST['Niveau'];
                 $insert = "INSERT INTO creat_exo (exercice, resultat, niveau) VALUES('$Calcul', '$Resultat', '$Niveau')";
-
+                       
+                         
+                       
+                        
                 $execute = $dbh->query($insert); 
-
+               
+                    
+                   
                 if($execute == true){
-                    $msgSuccess = "L'exercice à été enregistrées avec succès";
+                    
+                    $msgSuccess = "L'exercice à été enregistré avec succès";
 
                 }else{
                     $msgError = "L'enregistrement n'a pas pu être effectué";
                 }
+                
+            
             }
         }
 
     }
+    ?>
+  </div>
 
 
 
 	
 
-	?>
-	<div>
-    <?php
-        if(isset($msgError)){ echo $msgError; }elseif(isset($msgSuccess)){
-            echo $msgSuccess;
-        }
-    ?>
-    
-    </div>
+	
+	
 
 
     <!----Debut formulaire et tableau---->
@@ -112,8 +116,9 @@
                                 <div class="row">
 
                                    
-                                </div>
-                            </div>                        
+                            </div>
+                             </div>   
+                                                  
                         </form>
                     </div>
                 </div>
@@ -135,7 +140,16 @@
             </div>
         </div>
     </div>
-  
+    <div class="cordon">
+        <?php
+            if(isset($msgError)){ echo $msgError; }elseif(isset($msgSuccess)){
+                echo $msgSuccess;
+            }
+
+        ?>
+    </div>
+    
+    
         <table class="tableauxajouterexo">
             
             <tr class="ligne1">

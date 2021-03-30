@@ -60,7 +60,8 @@
             <?php
                 while ($ligne = $resultat -> fetch_assoc()) {
                         
-                        echo '<tr><td>'.$ligne['nom'] . '</td><td>' . $ligne['niveau'] .'</td><td>'. $ligne['calcul_donne'] . '</td><td>' . $ligne['calcul_pose']. '</td><td>' . $ligne['resultat']. '</td><td>' . $ligne['resultat_attendu']. '</td></tr>';
+                        echo '<tr><td>'.$ligne['nom'] . '</td><td>' . $ligne['niveau'] .'</td><td>'. $ligne['calcul_donne'] . '</td><td>'
+                         . $ligne['calcul_pose']. '</td><td>' . $ligne['resultat']. '</td><td>' . $ligne['resultat_attendu']. '</td></tr>';
                         
                     }
                     echo'</table>';
