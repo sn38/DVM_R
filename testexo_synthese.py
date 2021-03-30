@@ -67,20 +67,16 @@ def main():
     exo = get_bdd(num1, niveau)  #execution de la fonction qui va afficher un exercice choisi en fonction du niveau
 
     exo = str(exo)
-    #print(exo)
-    #commande = "espeak-ng -a 200 -v mb-fr1 -s 150 '" + exo + "' --stdout | aplay
-    #os.system("espeak-ng -a 200 -v mb-fr1 -s 150 \"%s\" --stdout | aplay" %exo)
-    commande = "espeak-ng -a 200 -v mb-fr1 -s 150 " + "\"" + exo + "\"" + " --stdout | aplay"
-    print(commande)
-    resultat_exec= subprocess.run(commande, shell=True)
-    if(resultat_exec.returncode != 0):
-        print("Erreur dans l'execution")
+    commande = "espeak-ng -a 200 -v mb-fr1 -s 150 " + "\"" + exo + "\"" + " --stdout | aplay"   #préparation de la commande
+    print(commande) #débug, affichage de la commande avant exécution
+    resultat_exec= subprocess.run(commande, shell=True) #exécution de la commande dans shell et récup objet de subprocess
+    if(resultat_exec.returncode != 0):  #vérif si returncode diff de 0
+        print("Erreur dans la lecture")
     else:
         print("Execution reussie")
 
     #print(resultat_exec.returncode)
     #print(resultat_exec.stderr)
-    #esng.say(exo)
 
     print("-----------------------------------------------")
     get_bdd_list_exo(niveau)  #execution de la fonction qui va afficher l'integralité des exercices concernés par le niveau
