@@ -10,29 +10,45 @@ Création: admin, le 02/03/2021
 import csv
 # Fonctions
 
+
+def dico_csv():
+    try:    # essai d'ouverture
+        f = open('caracteres3.csv', mode='r')   # ouverture csv en mode read
+    except FileNotFoundError:   # si fichier non trouvé
+        print("Fichier non trouvé!")    # affichage erreur
+        raise   # raise de l'erreur
+    else:   # si fichier ouvert
+        dictionnaire = build_dico(f)  # construction du dictionnaire
+        f.close()   # fermeture fichier
+        return dictionnaire  # renvoi dictionnaire
+
+
+def build_dico(file):
+    dialect = csv.Sniffer().sniff(file.readline())  # objet recap infos fichier csv (détermination séparateur sur ligne 0)
+    file.seek(0)    # retour ligne 0
+    caracteres = list(csv.DictReader(file, dialect=dialect))    # importation données sous forme liste
+    resistances = [elt['resistance'] for elt in caracteres]     # liste des valeurs de résistances
+    dict_complet = dict(zip(resistances, caracteres))   # création du dictionnaire (association liste résistances à caractères)
+    return dict_complet # renvoi dictionnaire construit
+
+
+def lire_dico(dico, res):
+    try:    # essai lecture dans dictionnaire
+        caractere = dico[res]['caractere']
+    except LookupError:     # si valeur hors dictionnaire
+        print("Erreur de résistance!")  # affichage erreur
+        raise # raise de l'erreur
+    else:   # si valeur dans dictionnaire
+        print('Caractère correspondant à', res, 'ohm:', caractere) # affichage caractère correspondant
+
 # Programme principal
 def main():
-    try:    # essai d'ouverture fichier
-        f = open('caracteres3d.csv', mode='r')                # ouverture fichier csv en lecture
-    except FileNotFoundError:   # si fichier non trouvé
-        print("Fichier non trouvé") # affchage message
-        raise   # raise de l'erreur
-    else:   # si ouverture réussie
-        dialect = csv.Sniffer().sniff(f.readline())             # objet recap infos fichier csv (détermination séparateur sur ligne 0)
-        f.seek(0)                                               # retour à première ligne
-        caracteres = list(csv.DictReader(f, dialect=dialect))   # importation données sous forme liste
-        resistances = [elt['resistance'] for elt in caracteres]     # liste des valeurs de résistances
-        dict_complet = dict(zip(resistances, caracteres))           # création du dictionnaire (association liste résistances à caractères)
-        f.close()
+    dictionnaire = dico_csv()
 
     print("Entrer résistance: ")
     val_res = input()
 
-    if val_res in dict_complet:                                 # vérif si valeur présent dans dico
-        caract = dict_complet[val_res]['caractere']
-        print('Caractère correspondant à', val_res, 'ohm:', caract)  # affichage caractère à une valeur de résistance
-    else:
-        print('Erreur de résistance')
+    lire_dico(dictionnaire, val_res)
 
     # print(dialect.delimiter)   # affiche le délimiteur
 
