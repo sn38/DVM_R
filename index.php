@@ -32,13 +32,12 @@
                 </div>
             </div>
             <div class="row">
-                
-                <input type="submit" id='submit' class='tacos' value='Connexion' >
-                
-                
-
+                <div class="col-md-12">
+                    <input type="submit" id='submit' class='btnn_connexion' value='Connexion' >
+                </div>
             </div>   
         </form>
+
           <?php
                 if(isset($_GET['erreur'])){
                     $err = $_GET['erreur'];
