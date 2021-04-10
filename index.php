@@ -47,9 +47,11 @@
                 ?>
     </div>
     
-               
+              
 
     <!----Fin Connexion----->
+    
+    <?php include("pied_page.php"); ?> 
 
 </body>
 </html>

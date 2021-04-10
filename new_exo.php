@@ -19,17 +19,18 @@
     <!----Fin header---->
 
     <!----Menu---->
-    <div class="btn-group btn-group-toggle groupe_de_boutons" data-toggle="buttons">
-        <label class="btn btn-secondary bouton_1">
-            <a class="bouton_index" href="index.php"><p>Déconnexion</p></a>
-        </label>
-        <label class="btn btn-secondary bouton_2">
-            <a class="bouton_index" href="new_exo.php"><p>Ajouter un exercice</p></a>
-        </label>
-        <label class="btn btn-secondary bouton_3 ">
-            <a class="bouton_index" href="bilan_prof.php"><p>Bilan professeurs</p></a>
-        </label>
-     
+    <div class="container">
+        <div class="btn-group btn-group-toggle groupe_de_boutons" data-toggle="buttons">
+            <label class="btn btn-secondary bouton_1">
+                <a class="bouton_index" href="index.php"><p>Déconnexion</p></a>
+            </label>
+            <label class="btn btn-secondary bouton_2">
+                <a class="bouton_index" href="new_exo.php"><p>Ajouter un exercice</p></a>
+            </label>
+            <label class="btn btn-secondary bouton_3 ">
+                <a class="bouton_index" href="bilan_prof.php"><p>Bilan professeurs</p></a>
+            </label>
+        </div>
     <!----Fin menu---->
     
     <?php
@@ -48,15 +49,9 @@
                 $Calcul= $_POST['Calcul'];
                 $Resultat = $_POST['Resultat'];
                 $Niveau = $_POST['Niveau'];
-                $insert = "INSERT INTO creat_exo (exercice, resultat, niveau) VALUES('$Calcul', '$Resultat', '$Niveau')";
-                       
-                         
-                       
-                        
+                $insert = "INSERT INTO creat_exo (exercice, resultat, niveau) VALUES('$Calcul', '$Resultat', '$Niveau')";   
                 $execute = $dbh->query($insert); 
-               
-                    
-                   
+
                 if($execute == true){
                     
                     $msgSuccess = "L'exercice à été enregistré avec succès";
@@ -64,26 +59,14 @@
                 }else{
                     $msgError = "L'enregistrement n'a pas pu être effectué";
                 }
-                
-            
             }
         }
-
     }
     ?>
-  </div>
-
-
-
-	
-
-	
-	
-
+  
 
     <!----Debut formulaire et tableau---->
     <div class="col-md-9 container champs1">
-   
         <div class="container">
             <h2 class="titre_H2">Ajouter un exercice</h2>
             <div class="row grid-divider">
@@ -91,8 +74,6 @@
                     <div class="col-padding">
                         <form  action="" method="POST">
                             <div class="simple-login-container2 ">
-                                
-                               
                                 <div class="row">
                                     <div class="col-md-12 form-group">
                                         <input type="text" name="Calcul" class="form-control" placeholder="Calcul" >
@@ -113,9 +94,7 @@
                                         <button type="submit" name="submit"class="btn btn-block btn-login2" placeholder="Enter your Password"> Enregistrer </button>
                                     </div>
                                 </div>
-                                <div class="row">
-
-                                   
+                                <div class="row">      
                             </div>
                              </div>   
                                                   
@@ -177,7 +156,7 @@
                     ?>
         </table>
    </div>
-
+</div>
 <!----fin formulaire et tableau-->
 
 

@@ -17,18 +17,21 @@
         <p>La calculatrice à cellules braille pour deficients visuels...</p>
     </div>
     <!----Fin header---->
+
     <!----Menu---->
-    <div class="btn-group btn-group-toggle groupe_de_boutons" data-toggle="buttons">
-        <label class="btn btn-secondary bouton_1">
-            <a class="bouton_index" href="index.php"><p>Déconnexion</p></a>
-        </label>
-        <label class="btn btn-secondary bouton_2">
-            <a class="bouton_index" href="new_exo.php"><p>Ajouter un exercice</p></a>
-        </label>
-        <label class="btn btn-secondary bouton_3">
-            <a class="bouton_index" href="bilan_prof.php"><p>Bilan professeurs</p></a>
-        </label>
-      </div>
+    <div class="container">
+        <div class="btn-group btn-group-toggle groupe_de_boutons" data-toggle="buttons">
+            <label class="btn btn-secondary bouton_1">
+                <a class="bouton_index" href="index.php"><p>Déconnexion</p></a>
+            </label>
+            <label class="btn btn-secondary bouton_2">
+                <a class="bouton_index" href="new_exo.php"><p>Ajouter un exercice</p></a>
+            </label>
+            <label class="btn btn-secondary bouton_3">
+                <a class="bouton_index" href="bilan_prof.php"><p>Bilan professeurs</p></a>
+            </label>
+        </div>
+    
       <!----Fin menu---->
       
     <?php
@@ -38,14 +41,14 @@
                     // afficher un message
                   ?>
                    
-                  <div class="algerienne">
+                <div class="message_user_connexion">
                       <?php
 
-                    echo "Bonjour $user, vous êtes connecté";
+                    echo "Bonjour $user, vous êtes connecté !";
                 }
-                    ?>
+    ?>
                 </div>
-               
+    </div>           
 
              
 

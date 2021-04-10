@@ -1,5 +1,4 @@
 
-
 /*fichier index.html*/
 .bandeau_haut{
     background-color: #5d8cb0;
@@ -62,17 +61,22 @@ a{
     display: inline-block;
     
 }*/
-
-/*sur menu.html bilan_prof.html new_exo.html*/
-/*pour le groupe de boutons menu*/
-
-
-.cordon{
-    padding-left: 15%;
-  
+.container
+{
+    background-color: indianred;
 }
+
+/*Sur menu.html*/
+/*pour ENTETE*/
+.message_user_connexion
+{
+    margin-top: 2%;
+    text-align: left;
+}
+
 .groupe_de_boutons{
-    margin: 1% 15%;
+    margin-top: 2%;
+    text-align: left;
 }
 
 .bouton_1{
@@ -101,6 +105,15 @@ background-color: #b0b3b5 ;
 .bouton_3:hover{
     background-color: #b0b3b5 ;
     }
+
+
+/*sur new_exo.html*/
+/*pour le groupe de boutons menu*/
+
+.cordon{ /*NEW EXO*/
+    padding-left: 15%;
+
+}
 
 /*page new_exo.html*/
 /*formulaire et tableau*/
@@ -171,7 +184,6 @@ color: #1665a1;
 
 }
 
-
 tr, td
 {
 border: 1px solid black;
@@ -185,4 +197,12 @@ padding: 50px;
 
     background-color:#b2cad4;
     color:black;
+}
+
+/*page pied_page.php*/
+/*image pied de page*/
+
+.image_pied
+{
+    width: 100%;
 }
