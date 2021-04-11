@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="js/bootstrap.min.js">
     <link rel="stylesheet" href="index.php">
 </head>
+
 <body>
     <!----Header---->
     <div class="container-fluid bandeau_haut">
@@ -31,43 +32,11 @@
                 <a class="bouton_index" href="bilan_prof.php"><p>Bilan professeurs</p></a>
             </label>
         </div>
+    </div>
     <!----Fin menu---->
     
-    <?php
-	$db_servername  = "localhost";
-	$db_username = "root";
-	$db_password = "";
-    
-	$dbh = new PDO("mysql:host=$db_servername;dbname=historisation_eleves", $db_username, $db_password);
-    
-
-    if(isset($_POST['submit'])){ // si le bouton a été enclenché
-
-        if(isset($_POST['Calcul'], $_POST['Resultat'], $_POST['Niveau'])){           
-            if($_POST['Calcul'] !== ""  && $_POST['Resultat'] !== "" && $_POST['Niveau'] !==""){
-                //Enregistrement bdd
-                $Calcul= $_POST['Calcul'];
-                $Resultat = $_POST['Resultat'];
-                $Niveau = $_POST['Niveau'];
-                $insert = "INSERT INTO creat_exo (exercice, resultat, niveau) VALUES('$Calcul', '$Resultat', '$Niveau')";   
-                $execute = $dbh->query($insert); 
-
-                if($execute == true){
-                    
-                    $msgSuccess = "L'exercice à été enregistré avec succès";
-
-                }else{
-                    $msgError = "L'enregistrement n'a pas pu être effectué";
-                }
-            }
-        }
-    }
-    ?>
-  
-
-    <!----Debut formulaire et tableau---->
+    <!----Debut formulaire---->
     <div class="col-md-9 container champs1">
-        <div class="container">
             <h2 class="titre_H2">Ajouter un exercice</h2>
             <div class="row grid-divider">
                 <div class="col-sm-3">
@@ -117,48 +86,53 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="cordon">
+    
+
+        <div class="cordon">
         <?php
             if(isset($msgError)){ echo $msgError; }elseif(isset($msgSuccess)){
                 echo $msgSuccess;
             }
 
         ?>
+        </div>
     </div>
-    
-    
-        <table class="tableauxajouterexo">
-            
-            <tr class="ligne1">
-                <td>Numéro exercice</td>
-                <td>Calcul</td>
-                <td>Résultat</td>
-                <td>Niveau</td>
-            </tr>
-               
-            <?php
-            $db_servername  = "localhost";
-            $db_username = "root";
-            $db_password = "";
-                $requete = "SELECT * FROM creat_exo";
-                $resultat = $dbh -> query($requete);
+    <!----fin formulaire-->
 
-                while ($ligne=$resultat->fetch(PDO::FETCH_ASSOC)){
-                        
-                        echo '<tr><td>'.$ligne['numero']. '</td><td>'.$ligne['exercice'] . '</td><td>' . $ligne['resultat'] .'</td><td>'. $ligne['niveau'] . '</td></tr>';
-                        
-                    }
-                    echo'</table>';
+    <!--tableau-->
+        <div class="container">
+            <table class="tableauxajouterexo">
                 
-                    
-                    ?>
-        </table>
-   </div>
-</div>
-<!----fin formulaire et tableau-->
+                <tr class="ligne1">
+                    <td>Numéro exercice</td>
+                    <td>Calcul</td>
+                    <td>Résultat</td>
+                    <td>Niveau</td>
+                </tr>
+                
+                <?php
+                $db_servername  = "localhost";
+                $db_username = "root";
+                $db_password = "";
+                    $requete = "SELECT * FROM creat_exo";
+                    $resultat = $dbh -> query($requete);
 
+                    while ($ligne=$resultat->fetch(PDO::FETCH_ASSOC)){
+                            
+                            echo '<tr><td>'.$ligne['numero']. '</td><td>'.$ligne['exercice'] . '</td><td>' . $ligne['resultat'] .'</td><td>'. $ligne['niveau'] . '</td></tr>';
+                            
+                        }
+                        echo'</table>';
+                        ?>
+            </table>
+        </div>
+    <!--fin tableau-->
+
+    
+
+
+
+    
 
 
 </body>

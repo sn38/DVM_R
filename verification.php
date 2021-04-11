@@ -14,8 +14,8 @@ session_start();
 if(isset($_POST['username']) && isset($_POST['password']))
 {
     // connexion à la base de données
-    $db_username = 'root';
-    $db_password = '';
+    $db_username = 'user';
+    $db_password = 'eclipse';
     $db_name     = 'historisation_eleves';
     $db_host     = 'localhost';
     $db = mysqli_connect($db_host, $db_username, $db_password,$db_name)
