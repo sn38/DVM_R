@@ -41,16 +41,36 @@ def lire_dico(dico, res):
     else:   # si valeur dans dictionnaire
         print('Caractère correspondant à', res, 'ohm:', caractere) # affichage caractère correspondant
 
+
+def lire_dico2(dico, res):  # retourne le caractère correspondant
+    try:    # essai lecture dans dictionnaire
+        caractere = dico[res]['caractere']
+    except LookupError:     # si valeur hors dictionnaire
+        print("Erreur de résistance!")  # affichage erreur
+        raise # raise de l'erreur
+    else:   # si valeur dans dictionnaire
+        return caractere # affichage caractère correspondant
+
 # Programme principal
 def main():
-    dictionnaire = dico_csv()
-
-    print("Entrer résistance: ")
-    val_res = input()
-
-    lire_dico(dictionnaire, val_res)
-
-    # print(dialect.delimiter)   # affiche le délimiteur
+    dictionnaire = dico_csv()   # build du dictionnaire
+    chaineCaract = ""               # définition chaine caractères vide
+    validation = False          # variable si calcul posé est juste
+    exo = "1+1"                     # exo de test
+    while (validation != True):     # Boucle verification entrée juste
+        print("Entrer",exo, ": ")       # print pour les tests
+        for i in range(len(exo)):   # Boucle reconnaissance entrée
+            val_res = input()           # input de test pour "ecriture"
+            caract = lire_dico2(dictionnaire, val_res)      # correspondance avec dico
+            chaineCaract = chaineCaract + caract    # concatenation entrée précédente et actuelle
+            print(chaineCaract)     # debug: affichage chaine à chaque input
+        if chaineCaract == exo:         # verfification si exo saisi par eleve identique a exo propose
+            validation = True       # changement etat pour sortie boucle de saisie
+            print("exercice juste")     # debug: affichage exo juste
+            chaineCaract = ""       # reset variable chaineCaract
+        else:                   # si exo saisi incorrect
+            print("exercice faux")  # debug: affichage exo faux
+            chaineCaract = ""           # reset variable chaineCaract
 
 
 if __name__ == '__main__':
