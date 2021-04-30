@@ -66,6 +66,7 @@ def synthese_vocale(message):   # fonction de lecture via synthèse vocale
 
 
 def main():
+    # ------------------initialisations----------------------------------
     dictionnaire = dico_csv()   # build du dictionnaire
     chaineCaract = ""               # définition chaine caractères vide
     validation = False          # variable si calcul posé est juste
