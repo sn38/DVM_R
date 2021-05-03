@@ -14,7 +14,7 @@ import sqlite3  #importation du module sqlite3
 def affiche_calcul_bdd(numero, niv): #passe en parametres le numero et le niveau
     cnx = sqlite3.connect('DVmath_exercice.db')  #acces base de donnée
     cursor = cnx.cursor()
-    request_val = "SELECT exercice FROM creat_exo WHERE numero = ? and niveau = ?"  #requete
+    request_val = "SELECT exercice FROM create_exo WHERE numero = ? and niveau = ?"  #requete
     data = (numero, niv)
     cursor.execute(request_val, data)
     resultat = cursor.fetchall()  #afficher plusieurs donnée en tableau
@@ -30,7 +30,7 @@ def affiche_calcul_bdd(numero, niv): #passe en parametres le numero et le niveau
 def affiche_resultat_bdd(numero):
     cnx = sqlite3.connect('DVmath_exercice.db')  #acces base de donnée
     cursor = cnx.cursor()
-    request_val = "SELECT resultat FROM creat_exo WHERE numero = ?"  #requete
+    request_val = "SELECT resultat FROM create_exo WHERE numero = ?"  #requete
     data = (numero)
     cursor.execute(request_val, data)
     resultat = cursor.fetchall()  #afficher plusieurs donnée en tableau
