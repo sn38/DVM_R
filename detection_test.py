@@ -9,6 +9,7 @@ Création: admin, le 02/03/2021
 
 import csv
 import subprocess
+import RPi.GPIO as GPIO
 # Fonctions
 
 
@@ -62,10 +63,23 @@ def synthese_vocale(message):   # fonction de lecture via synthèse vocale
     else:
         print("Execution reussie")
 
+
+def validationBP():
+    pinBtn = 19
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(pinBtn, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+    bp = 0
+    while bp == 0:
+        etat = GPIO.input(pinBtn)
+        if etat == 1:
+            print("Appui detécté")
+            bp = 1
+
 # Programme principal
 
 
 def main():
+    # ------------------initialisations----------------------------------
     dictionnaire = dico_csv()   # build du dictionnaire
     chaineCaract = ""               # définition chaine caractères vide
     validation = False          # variable si calcul posé est juste
@@ -74,8 +88,10 @@ def main():
 
     while not validation:     # Boucle verification entrée juste
         print("Entrer",exo, ": ")       # print pour les tests
-        synthese_vocale("Poser:")
+        synthese_vocale("Poser:") #coucou
         synthese_vocale(exo)
+
+        validationBP()
 
         for i in range(len(exo)):   # Boucle reconnaissance entrée
             val_res = input()           # input de test pour "ecriture"
