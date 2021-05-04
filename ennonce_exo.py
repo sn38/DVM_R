@@ -9,14 +9,16 @@ Création: admin, le 26/03/2021
 
 #Class
 class Eleves:
-    def __init__(self, nom="Dupond", prenom="Pierre", niveau = 6):
+    def __init__(self, nom="Dupond", prenom="Pierre", niveau = 6): #definition d'un constructeur surchargé pour identification élève
+        #attribut privés
         self.__nom = nom
         self.__prenom = prenom
         self.__niveau = niveau
 
-    def affiche_eleve(self):
+    def affiche_eleve(self): #méthode pour l'énoncer de l'élève
         print(self.__nom, self.__prenom, self.__niveau)
 
+    #propriétés pour attributs privés
     @property
     def nom(self):
         return self.__nom
@@ -95,24 +97,13 @@ class Travaux_eleves:
 
 # Programme principal 
 def main():
-        eleve1 = Eleves("Dupond", "Pierre", 6)
+        #instanciation pour Eleves
+        eleve1 = Eleves("Dupond", "Pierre", 6) #Appel de la classe avec de nouveau parametres
         print("-----------------Eleves----------------")
-        print(eleve1.nom, eleve1.prenom, eleve1.niveau)
-
-
-
-
-
-
-
-
-
-
-
-
+        print(eleve1.nom, eleve1.prenom, eleve1.niveau) #Affichage
         print("---------------Exercices---------------")
         exercice1 = Exercices(3, "1+2", 3)
-        print(exercice1.numero, exercice1.calcul, exercice1.resultat)
+        print(exercice1.numero, exercice1.calcul, exercice1.resultat)S
         print("---------------Travaux_eleves--------------------------")
         travaux = Travaux_eleves("Dupond", 6, "1+2", "1+2", 3, 3)
         print(travaux.nom, travaux.niveau, travaux.calcul, travaux.calcul_pose, travaux.resultat, travaux.resultat_pose)

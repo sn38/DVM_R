@@ -9,12 +9,21 @@ Création: admin, le 09/03/2021
 import sqlite3  #importation du module sqlite3
 
 # Fonctions
-
+def affiche_eleves_bdd(niv): #passe en parametres le numero et le niveau
+    cnx = sqlite3.connect('DVmath_exercice.db')  #acces base de donnée
+    cursor = cnx.cursor()
+    request_val = "SELECT niveau FROM eleve WHERE nom=? AND prenom=?"  #requete
+    data = (niv)
+    cursor.execute(request_val, data)
+    resultat = cursor.fetchall()  #afficher plusieurs donnée en tableau
+    cnx.commit()
+    cursor.close()
+    cnx.close()
 
 def affiche_calcul_bdd(numero, niv): #passe en parametres le numero et le niveau
     cnx = sqlite3.connect('DVmath_exercice.db')  #acces base de donnée
     cursor = cnx.cursor()
-    request_val = "SELECT exercice FROM create_exo WHERE numero = ? and niveau = ?"  #requete
+    request_val = "SELECT exercice FROM exercices WHERE numero = ? and niveau = ?"  #requete
     data = (numero, niv)
     cursor.execute(request_val, data)
     resultat = cursor.fetchall()  #afficher plusieurs donnée en tableau
@@ -30,7 +39,7 @@ def affiche_calcul_bdd(numero, niv): #passe en parametres le numero et le niveau
 def affiche_resultat_bdd(numero):
     cnx = sqlite3.connect('DVmath_exercice.db')  #acces base de donnée
     cursor = cnx.cursor()
-    request_val = "SELECT resultat FROM create_exo WHERE numero = ?"  #requete
+    request_val = "SELECT resultat FROM exercices WHERE numero = ?"  #requete
     data = (numero)
     cursor.execute(request_val, data)
     resultat = cursor.fetchall()  #afficher plusieurs donnée en tableau
@@ -44,13 +53,13 @@ def affiche_resultat_bdd(numero):
     return resultat_bdd #renvoie le calcul
 
 
-def enter_you_name():
-    answer = "Dupond"
-    answer1 = "Pierre"
-    answer2 = 6  #le niveau de l'élève
-    result_niv = answer2
-    if answer2 in range(3, 6):
-        print("Elève :", answer, answer1, result_niv, "ème")
+def enter_you_name(result_niv):
+    nom = "Dupond"
+    prenom = "Pierre"
+    niveau = 6  #le niveau de l'élève
+
+    if niveau == result_niv :
+        print("Elève :", nom, prenom, niveau, "ème")
     else:
         print("Erreur")
 
@@ -78,6 +87,7 @@ def pose_calcul(calcul_p):
 
     return calcul_pose
 
+
 def pose_resultat(resultat_p):
     resultat_pose = input("Poser le resultat >")
     if resultat_pose == resultat_p:
@@ -88,11 +98,34 @@ def pose_resultat(resultat_p):
     return resultat_pose
 
 
+def verifier_eleve(nom, prenom, niveau):
+    cnx = sqlite3.connect('DVmath_exercice.db')  # acces base de donnée
+    cursor = cnx.cursor()
+    #cursor.execute("SELECT EXISTS(SELECT 1 FROM eleves WHERE nom = 'Riviereg')")
+    #data = cursor.fetchone()
+    request_val = "SELECT EXISTS(SELECT 1 FROM `eleves` WHERE 'nom' = ? and 'prenom' = ? and 'niveau' = ?)"  # requete
+    #nom = "'" + nom + "'"
+    #prenom = "'" + prenom + "'"
+    data = (nom, prenom, niveau)
+    r = cursor.execute(request_val, data).fetchone()
+    for row in r:
+        print("Resultat", row)
+    if r:
+        print("eleve existant")
+    else:
+        print("eleve inconnu")
+    cnx.commit()
+    cursor.close()
+    cnx.close()
+
+
 # Programme principal
 def main():
 
-    niveau = enter_you_name()  #récupere le niveau entrer par l'élève
+    niveau = enter_you_name(5)  #récupere le niveau entrer par l'élève
     print("-----------------------------------------------")
+
+    verifier_eleve("Riviere", "Maridee", 5)
 
     numero_exo = choisir_exo()  #récupere le numero exercice entrer par l'élève
     print("-----------------------------------------------")
