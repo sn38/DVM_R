@@ -20,6 +20,7 @@ def affiche_eleves_bdd(niv): #passe en parametres le numero et le niveau
     cursor.close()
     cnx.close()
 
+
 def affiche_calcul_bdd(numero, niv): #passe en parametres le numero et le niveau
     cnx = sqlite3.connect('DVmath_exercice.db')  #acces base de donnée
     cursor = cnx.cursor()
@@ -35,6 +36,9 @@ def affiche_calcul_bdd(numero, niv): #passe en parametres le numero et le niveau
     print("calcul propose:", calcul_bdd) #affiche le resultat de la requete
 
     return calcul_bdd #renvoie le calcul
+
+    #return resultat
+
 
 def affiche_resultat_bdd(numero):
     cnx = sqlite3.connect('DVmath_exercice.db')  #acces base de donnée
@@ -65,8 +69,8 @@ def enter_you_name(result_niv):
 
     return result_niv  #renvoie le niveau entrer par l'élève (niveau)
 
-def choisir_exo():
 
+def choisir_exo():
     print("Quel exercice souhaitez vous réaliser ? > ")
     num_exo = 3
     if num_exo in range(1, 999):
@@ -98,34 +102,12 @@ def pose_resultat(resultat_p):
     return resultat_pose
 
 
-def verifier_eleve(nom, prenom, niveau):
-    cnx = sqlite3.connect('DVmath_exercice.db')  # acces base de donnée
-    cursor = cnx.cursor()
-    #cursor.execute("SELECT EXISTS(SELECT 1 FROM eleves WHERE nom = 'Riviereg')")
-    #data = cursor.fetchone()
-    request_val = "SELECT EXISTS(SELECT 1 FROM `eleves` WHERE 'nom' = ? and 'prenom' = ? and 'niveau' = ?)"  # requete
-    #nom = "'" + nom + "'"
-    #prenom = "'" + prenom + "'"
-    data = (nom, prenom, niveau)
-    r = cursor.execute(request_val, data).fetchone()
-    for row in r:
-        print("Resultat", row)
-    if r:
-        print("eleve existant")
-    else:
-        print("eleve inconnu")
-    cnx.commit()
-    cursor.close()
-    cnx.close()
-
 
 # Programme principal
 def main():
 
-    niveau = enter_you_name(5)  #récupere le niveau entrer par l'élève
+    niveau = enter_you_name(6)  #récupere le niveau entrer par l'élève
     print("-----------------------------------------------")
-
-    verifier_eleve("Riviere", "Maridee", 5)
 
     numero_exo = choisir_exo()  #récupere le numero exercice entrer par l'élève
     print("-----------------------------------------------")
