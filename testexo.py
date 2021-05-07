@@ -57,6 +57,23 @@ def affiche_resultat_bdd(numero):
     return resultat_bdd #renvoie le calcul
 
 
+def verifier_eleve(nom, prenom, niveau): #Verification que l'élève existe
+    cnx = sqlite3.connect('DVmath_exercice.db')  # acces base de donnée
+    cursor = cnx.cursor()
+    cursor.execute("SELECT count(*) FROM eleves WHERE nom = ? and prenom = ? and niveau = ?", (nom, prenom, niveau,))
+    r = cursor.fetchone()[0] #selectionne la premiere ligne des enregistrements
+    if r==1:
+        print("eleve existant")
+        existant = 1
+    else:
+        print("eleve inconnu")
+        existant = 0
+    cursor.close()
+    cnx.close()
+
+    return existant #renvoie l'existance de l'élève dans la base de données
+
+
 def enter_you_name(result_niv):
     nom = "Dupond"
     prenom = "Pierre"
@@ -66,6 +83,7 @@ def enter_you_name(result_niv):
         print("Elève :", nom, prenom, niveau, "ème")
     else:
         print("Erreur")
+    verifier_eleve(nom, prenom, niveau)
 
     return result_niv  #renvoie le niveau entrer par l'élève (niveau)
 
