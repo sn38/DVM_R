@@ -34,7 +34,8 @@ class Eleves:
     def verifier_eleve(self): #Verification que l'élève existe
         cnx = sqlite3.connect('DVmath_exercice.db')  # acces base de donnée
         cursor = cnx.cursor()
-        cursor.execute("SELECT count(*) FROM eleves WHERE nom = ? and prenom = ? and niveau = ?", (self.__nom, self.__prenom, self.__niveau,))
+        cursor.execute("SELECT count(*) FROM eleves WHERE nom = ? and prenom = ? and niveau = ?",
+                       (self.__nom, self.__prenom, self.__niveau,))
         r = cursor.fetchone()[0]
         if r==1:
             print("eleve existant")
@@ -47,29 +48,29 @@ class Eleves:
 
 
 class Exercices:
-    def __init__(self, numero=0, calcul="1+1", resultat= 0, niveau = 6):
+    def __init__(self, numero=0, niveau = 6, calcul = "1+1"): #definition d'un constructeur surchargé
+        # attribut privés
         self.__numero = numero
-        self.__calcul = calcul
-        self.__resultat = resultat
         self.__niveau = niveau
+        self.__calcul = calcul
 
     def affiche_exercices(self):
-        print(self.__numero, self.__calcul, self.__resultat)
+        print(self.__numero)
 
+    # propriétés pour attributs privés
     @property
     def numero(self):
         return self.__numero
 
     @property
+    def niveau(self):
+        return self.__niveau
+
+    @property
     def calcul(self):
         return self.__calcul
 
-    @property
-    def resultat(self):
-        return self.__resultat
-
-
-    def affiche_calcul_bdd(self, numero, niveau):  # passe en parametres le numero et le niveau
+    def ennonce_calcul_bdd(self):  #en parametres passe le numero et le niveau
         cnx = sqlite3.connect('DVmath_exercice.db')  # acces base de donnée
         cursor = cnx.cursor()
         request_val = "SELECT exercice FROM exercices WHERE numero = ? and niveau = ?"  # requete
@@ -80,9 +81,11 @@ class Exercices:
         cnx.close()
 
         calcul_bdd = ''.join(resultat[0])  # conversion de la valeur à l'indice 0 du tuple en chaîne de caractères
-        print("calcul propose:", calcul_bdd)  # affiche le resultat de la requete
+        return calcul_bdd  # renvoie le calcul
 
-        #return calcul_bdd  # renvoie le calcul
+    def def_calcul(self, calcul): #permet de definir l'attribu calcul
+        self.__calcul = calcul
+
 
 
 class Travaux_eleves:
@@ -147,20 +150,15 @@ def choisir_exo():
     return num_exo  # renvoie le numero d'exercice entrer par l'élève (numero_exo)
 
 
-def affiche_calcul_bdd(numero, niv): #passe en parametres le numero et le niveau
-    cnx = sqlite3.connect('DVmath_exercice.db')  #acces base de donnée
-    cursor = cnx.cursor()
-    request_val = "SELECT exercice FROM exercices WHERE numero = ? and niveau = ?"  #requete
-    data = (numero, niv)
-    cursor.execute(request_val, data)
-    resultat = cursor.fetchall()  #afficher plusieurs donnée en tableau
-    cursor.close()
-    cnx.close()
+def pose_calcul(object):
+    calcul_pose = input("Poser le calcul > ") #present pour le test !!
+    #calcul_pose = "32-14"
+    if calcul_pose == object.calcul:
+        print("Vous avez correctement ecrit le calcul : ", calcul_pose)
+    else:
+        print("Erreur")
 
-    calcul_bdd = ''.join(resultat[0]) #conversion de la valeur à l'indice 0 du tuple en chaîne de caractères
-    print("calcul propose:", calcul_bdd) #affiche le resultat de la requete
-
-    return calcul_bdd #renvoie le calcul
+    return calcul_pose
 
 
 def affiche_resultat_bdd(numero):
@@ -179,28 +177,30 @@ def affiche_resultat_bdd(numero):
     return resultat_bdd #renvoie le calcul
 
 
-
-
 # Programme principal 
 def main():
-        #instanciation pour Eleves
-        eleve1 = Eleves("Larue", "Dylan", 4) #Appel de la classe avec de nouveau parametres
-        print("-----------------Eleves----------------")
-        print(eleve1.nom, eleve1.prenom, eleve1.niveau) #Affichage
-        eleve1.verifier_eleve() #appel fonction
+    #instanciation pour Eleves
+    eleve1 = Eleves("Larue", "Dylan", 5) #instanciation de la classe avec de nouveau parametres
+    print("-----------------Eleves----------------")
+    print(eleve1.nom, eleve1.prenom, eleve1.niveau) #Affichage
+    eleve1.verifier_eleve() #appel fonction
 
-        print("-------------Choix Exercice------------")
-        choisir_exo() #Appel fonction qui permet de chosir un exercice
+    print("-------------Choix Exercice------------")
+    choisir_exo() #Appel fonction qui permet de chosir un exercice
 
 
-        print("---------------Exercices---------------")
-        exercice1 = Exercices(2, "36-(13-8)", 31, 4)
-        exercice1.affiche_calcul_bdd()
-        print(exercice1.numero, exercice1.calcul, exercice1.resultat)
+    print("---------------Exercice---------------")
+    exercice1 = Exercices(1, eleve1.niveau) #instanciation de la classe
+    exercice1.def_calcul(exercice1.ennonce_calcul_bdd()) #appel de def_calcul pour modifier l'attribut calcul de exercice
+    print("calcul propose:", exercice1.calcul)  #affiche le calcul proposé
 
-        print("---------------Travaux_eleves--------------------------")
-        travaux = Travaux_eleves("Dupond", 6, "1+2", "1+2", 3, 3)
-        print(travaux.nom, travaux.niveau, travaux.calcul, travaux.calcul_pose, travaux.resultat, travaux.resultat_pose)
+    pose_calcul(exercice1) #verfication du calcul pose
+
+    print("---------------Resultat---------------")
+
+    print("------------Travaux_eleves------------")
+    travaux = Travaux_eleves("Dupond", 6, "1+2", "1+2", 3, 3)
+    print(travaux.nom, travaux.niveau, travaux.calcul, travaux.calcul_pose, travaux.resultat, travaux.resultat_pose)
 
 
 
