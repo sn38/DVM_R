@@ -9,13 +9,13 @@ Création: admin, le 02/03/2021
 
 import csv
 import subprocess
-import RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO
 # Fonctions
 
 
 def dico_csv():
     try:    # essai d'ouverture
-        f = open('caracteres3.csv', mode='r')   # ouverture csv en mode read
+        f = open('caracteres4.csv', mode='r')   # ouverture csv en mode read
     except FileNotFoundError:   # si fichier non trouvé
         print("Fichier non trouvé!")    # affichage erreur
         raise   # raise de l'erreur
@@ -29,8 +29,11 @@ def build_dico(file):
     dialect = csv.Sniffer().sniff(file.readline())  # objet recap infos fichier csv (détermination séparateur sur ligne 0)
     file.seek(0)    # retour ligne 0
     caracteres = list(csv.DictReader(file, dialect=dialect))    # importation données sous forme liste
-    resistances = [elt['resistance'] for elt in caracteres]     # liste des valeurs de résistances
-    dict_complet = dict(zip(resistances, caracteres))   # création du dictionnaire (association liste résistances à caractères)
+    #print(caracteres[:15])
+    #dict = [elt['id'] for elt in caracteres]     # liste des valeurs de résistances
+    id = range(47)
+    dict_complet = dict(zip(id, caracteres))   # création du dictionnaire (association liste résistances à caractères)
+
     return dict_complet  # renvoi dictionnaire construit
 
 
