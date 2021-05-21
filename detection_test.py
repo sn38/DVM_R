@@ -9,13 +9,14 @@ Création: admin, le 02/03/2021
 
 import csv
 import subprocess
+import codecs
 #import RPi.GPIO as GPIO
 # Fonctions
 
 
 def dico_csv():
     try:    # essai d'ouverture
-        f = open('caracteres4.csv', mode='r')   # ouverture csv en mode read
+        f = codecs.open('caracteres4.csv','r', 'utf-8') # ouverture csv en mode read
     except FileNotFoundError:   # si fichier non trouvé
         print("Fichier non trouvé!")    # affichage erreur
         raise   # raise de l'erreur
@@ -49,7 +50,7 @@ def lire_dico(dico, res):
 
 def lire_dico2(dico, res):  # retourne le caractère correspondant
     try:    # essai lecture dans dictionnaire
-        caractere = dico[res]['caractere']
+        caractere = dico[res]['sbas']
     except LookupError:     # si valeur hors dictionnaire
         print("Erreur de résistance!")  # affichage erreur
         raise  # raise de l'erreur
@@ -94,7 +95,7 @@ def main():
         synthese_vocale("Poser:") #coucou
         synthese_vocale(exo)
 
-        validationBP()
+        #validationBP()
 
         for i in range(len(exo)):   # Boucle reconnaissance entrée
             val_res = input()           # input de test pour "ecriture"
