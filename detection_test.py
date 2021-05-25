@@ -7,15 +7,56 @@ Création: admin, le 02/03/2021
 
 # Imports
 
+#pour traitement csv
 import csv
+#pour synthese vocale
 import subprocess
+#pour lire fichier en UTF-8
 import codecs
+#pour lecture du GPIO
+import RPi.GPIO as GPIO
+#pour lecture du MCP
+import busio
+import digitalio
+import board
+import adafruit_mcp3xxx.mcp3008 as MCP
 import time
-#import RPi.GPIO as GPIO
+from adafruit_mcp3xxx.analog_in import AnalogIn
+
+
+# classes
+class CelluleBraille:
+    def __init__(self, channel=0, valeur=0):
+        self.__channel = channel
+        self.__valeur = valeur
+
+    @property
+    def channel(self):
+           return self.__channel
+    @property
+    def valeur(self):
+        return self.__valeur
+
+    @classmethod
+    def create_SPI(self):  # creation bus spi
+        spi = busio.SPI(clock=board.SCK, MISO=board.MISO, MOSI=board.MOSI)
+        print("spi créé")
+        return spi
+
+    @classmethod
+    def create_CS(self):  # creation chip select
+        cs = digitalio.DigitalInOut(board.D5)
+        print("cs créé")
+        return cs
+
+    def create_MCP(spi, cs):
+        mcp = MCP.MCP3008(spi, cs)
+        print("mcp créé")
+        return mcp
+
+
 # Fonctions
-
-
-def dico_csv():
+def dico_csv():     #ouverture fichier CSV
     try:    # essai d'ouverture
         f = codecs.open('caracteres4.csv','r', 'utf-8') # ouverture csv en mode read
     except FileNotFoundError:   # si fichier non trouvé
@@ -27,7 +68,7 @@ def dico_csv():
         return dictionnaire  # renvoi dictionnaire
 
 
-def build_dico(file):
+def build_dico(file):       #construction du dictionnaire à partir du CSV
     dialect = csv.Sniffer().sniff(file.readline())  # objet recap infos fichier csv (détermination séparateur sur ligne 0)
     file.seek(0)    # retour ligne 0
     caracteres = list(csv.DictReader(file, dialect=dialect))    # importation données sous forme liste
@@ -37,26 +78,6 @@ def build_dico(file):
     dict_complet = dict(zip(id, caracteres))   # création du dictionnaire (association liste résistances à caractères)
 
     return dict_complet  # renvoi dictionnaire construit
-
-
-def lire_dico(dico, res):
-    try:    # essai lecture dans dictionnaire
-        caractere = dico[res]['caractere']
-    except LookupError:     # si valeur hors dictionnaire
-        print("Erreur de résistance!")  # affichage erreur
-        raise  # raise de l'erreur
-    else:   # si valeur dans dictionnaire
-        print('Caractère correspondant à', res, 'ohm:', caractere)  # affichage caractère correspondant
-
-
-def lire_dico2(dico, res):  # retourne le caractère correspondant
-    try:    # essai lecture dans dictionnaire
-        caractere = dico[res]['sbas']
-    except LookupError:     # si valeur hors dictionnaire
-        print("Erreur de résistance!")  # affichage erreur
-        raise  # raise de l'erreur
-    else:   # si valeur dans dictionnaire
-        return caractere  # affichage caractère correspondant
 
 
 def synthese_vocale(message):   # fonction de lecture via synthèse vocale
@@ -69,7 +90,7 @@ def synthese_vocale(message):   # fonction de lecture via synthèse vocale
         print("Execution reussie")
 
 
-def validationBP():
+def validationBP():         #met en pause exec du code jusqu'à appui bouton
     pinBtn = 19
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(pinBtn, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
@@ -81,24 +102,28 @@ def validationBP():
             bp = 1
 
 
-def check_dico(dico, valres):
-    dictionnaire = dico
-    for key, value in dictionnaire.items():
-        seuil_bas = dictionnaire[key].get('sbas')
+def check_dico(dico, valres):       #lecture du dictionnaire pour reconnaissance caractère
+    for key, value in dico.items():
+        seuil_bas = dico[key].get('sbas')
         seuil_bas = int(seuil_bas)
-        seuil_haut = dictionnaire[key].get('shaut')
+        seuil_haut = dico[key].get('shaut')
         seuil_haut = int(seuil_haut)
-        #time.sleep(0.01)
         if seuil_bas <= valres <= seuil_haut:
-            print(key, dictionnaire[key].get('caractere'))
+            caractere = dico[key].get('caractere')
+            return caractere
+            print(key, caractere)  #debug
             break
 
 
+
+
 # Programme principal
-
-
 def main():
     # ------------------initialisations----------------------------------
+    spi = CelluleBraille.create_SPI()      #creation bus spi
+    cs = CelluleBraille.create_CS()#creation chip select
+    mcp = CelluleBraille.create_MCP(spi, cs)   #creation objet mcp
+
     dictionnaire = dico_csv()   # build du dictionnaire
     chaineCaract = ""               # définition chaine caractères vide
     validation = False          # variable si calcul posé est juste
@@ -107,7 +132,7 @@ def main():
 
     #for key, value in dictionnaire.items():
     #    print(key, dictionnaire[key].get('sbas'), dictionnaire[key].get('shaut'))
-    check_dico(dictionnaire, 880)
+    #check_dico(dictionnaire, 880)
 
     while not validation:     # Boucle verification entrée juste
         print("Entrer",exo, ": ")       # print pour les tests
@@ -115,13 +140,25 @@ def main():
         synthese_vocale(exo)
 
         #validationBP()
-
         for i in range(len(exo)):   # Boucle reconnaissance entrée
-            val_res = input()           # input de test pour "ecriture"
-            caract = lire_dico2(dictionnaire, val_res)      # correspondance avec dico
-            synthese_vocale(caract)
-            chaineCaract = chaineCaract + caract    # concatenation entrée précédente et actuelle
-            print(chaineCaract)     # debug: affichage chaine à chaque input
+            print("hello")
+            #val_res1 = 15
+            #caract = check_dico(dictionnaire, val_res1)
+            #synthese_vocale(caract)
+            #chaineCaract = chaineCaract + caract  # concatenation entrée précédente et actuelle
+            #print(chaineCaract)  # debug: affichage chaine à chaque input
+            #val_res2 = 130
+            #caract = check_dico(dictionnaire, val_res2)
+            #synthese_vocale(caract)
+            #chaineCaract = chaineCaract + caract  # concatenation entrée précédente et actuelle
+            #print(chaineCaract)  # debug: affichage chaine à chaque input
+            #val_res3 = 15
+            #caract = check_dico(dictionnaire, val_res3)
+            #synthese_vocale(caract)
+            #chaineCaract = chaineCaract + caract  # concatenation entrée précédente et actuelle
+            #print(chaineCaract)  # debug: affichage chaine à chaque input
+            #val_res = input()           # input de test pour "ecriture"
+            #caract = lire_dico2(dictionnaire, val_res)      # correspondance avec dico
 
         if chaineCaract == exo:         # verfification si exo saisi par eleve identique a exo propose
             validation = True       # changement etat pour sortie boucle de saisie
