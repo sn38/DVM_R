@@ -16,7 +16,6 @@ def affiche_eleves_bdd(niv): #passe en parametres le numero et le niveau
     data = (niv)
     cursor.execute(request_val, data)
     resultat = cursor.fetchall()  #afficher plusieurs donnée en tableau
-    cnx.commit()
     cursor.close()
     cnx.close()
 
@@ -28,7 +27,6 @@ def affiche_calcul_bdd(numero, niv): #passe en parametres le numero et le niveau
     data = (numero, niv)
     cursor.execute(request_val, data)
     resultat = cursor.fetchall()  #afficher plusieurs donnée en tableau
-    cnx.commit()
     cursor.close()
     cnx.close()
 
@@ -47,7 +45,6 @@ def affiche_resultat_bdd(numero):
     data = (numero)
     cursor.execute(request_val, data)
     resultat = cursor.fetchall()  #afficher plusieurs donnée en tableau
-    cnx.commit()
     cursor.close()
     cnx.close()
 
@@ -74,10 +71,31 @@ def verifier_eleve(nom, prenom, niveau): #Verification que l'élève existe
     return existant #renvoie l'existance de l'élève dans la base de données
 
 
+def travaux_eleve(nom, niveau, calcul, calcul_p, resultat, resultat_p): #Par Evan Lacombe
+    # permet d'ouvrir la bdd
+    cnx = sqlite3.connect('DVmath_exercice.db')
+    cursor = cnx.cursor()
+    # insertion des données
+    request_val = "INSERT INTO travaux_eleves (nom, niveau, calcul, calcul_pose, resultat, resultat_pose) VALUES (?,?,?,?,?,?)"
+    data = (nom, niveau, calcul, calcul_p, resultat, resultat_p)
+    cursor.execute(request_val, data)
+    resultat = cursor.fetchall()  # afficher plusieurs donnée en tableau
+
+    #curseur.execute("SELECT * FROM bilan")
+    #for resultat in curseur:
+        #print(resultat)
+
+    cnx.commit()
+    cursor.close()
+    cnx.close()
+
+    print("Acquis enregistrés")
+    return resultat
+
 def enter_you_name(result_niv):
-    nom = "Dupond"
-    prenom = "Pierre"
-    niveau = 6  #le niveau de l'élève
+    nom = "Larue"
+    prenom = "Dylan"
+    niveau = 4  #le niveau de l'élève
 
     if niveau == result_niv :
         print("Elève :", nom, prenom, niveau, "ème")
@@ -90,7 +108,7 @@ def enter_you_name(result_niv):
 
 def choisir_exo():
     print("Quel exercice souhaitez vous réaliser ? > ")
-    num_exo = 3
+    num_exo = 2
     if num_exo in range(1, 999):
         print("Vous avez choisi l'exercice", num_exo) #va affciher le numéro de l'exercice definis
     else:
@@ -120,11 +138,11 @@ def pose_resultat(resultat_p):
     return resultat_pose
 
 
-
 # Programme principal
 def main():
 
-    niveau = enter_you_name(6)  #récupere le niveau entrer par l'élève
+    niveau = enter_you_name(4)#récupere le niveau entrer par l'élève
+    nom = enter_you_name("Larue")
     print("-----------------------------------------------")
 
     numero_exo = choisir_exo()  #récupere le numero exercice entrer par l'élève
@@ -133,12 +151,14 @@ def main():
     calcul_propose = affiche_calcul_bdd(numero_exo, niveau)   #affiche un exercice choisi en fonction du niveau et du numero d'exercice
     print("-----------------------------------------------")
 
-    pose_calcul(calcul_propose) #demande le calcul a recopier et verifie si il a correctement été poser
+    calcul_pose = pose_calcul(calcul_propose) #demande le calcul a recopier et verifie si il a correctement été poser
     print("-----------------------------------------------")
 
     resultat_calcul = affiche_resultat_bdd(str(numero_exo))
-    pose_resultat(resultat_calcul)
+    resultat_pose = pose_resultat(resultat_calcul)
 
+    print("-----------------------------------------------")
+    travaux_eleve(nom, niveau,calcul_propose, calcul_pose, resultat_calcul, resultat_pose)
 
 if __name__ == '__main__':
     main()

@@ -10,8 +10,7 @@ import sqlite3  # importation du module sqlite3
 
 # Class
 class Eleves:
-    def __init__(self, nom="Dupond", prenom="Pierre",
-                 niveau=6):  # definition d'un constructeur surchargé pour identification élève
+    def __init__(self, nom="Dupond", prenom="Pierre", niveau=6):  # definition d'un constructeur surchargé pour identification élève
         # attribut privés
         self.__nom = nom
         self.__prenom = prenom
@@ -111,17 +110,16 @@ class Exercices:
 
 
 class Travaux_eleves:
-    def __init__(self, nom="Dupond", niveau=6, numero=0, calcul="1+2", calcul_pose="1+2", resultat=3, resultat_pose=3):
+    def __init__(self, nom="Dupond", niveau=6, calcul="1+2", calcul_pose="1+2", resultat=3, resultat_pose=3):
         self.__nom = nom
         self.__niveau = niveau
-        self.__numero = numero
         self.__calcul = calcul
         self.__calcul_pose = calcul_pose
         self.__resultat = resultat
         self.__resultat_pose = resultat_pose
 
     def affiche_travaux(self):
-        print(self.__nom, self.__niveau, self.__numero, self.__calcul, self.__calcul_pose, self.__resultat, )
+        print(self.__nom, self.__niveau, self.__calcul, self.__calcul_pose, self.__resultat, )
 
     @property
     def nom(self):
@@ -130,10 +128,6 @@ class Travaux_eleves:
     @property
     def niveau(self):
         return self.__niveau
-
-    @property
-    def numero(self):
-        return self.__numero
 
     @property
     def calcul(self):
@@ -150,6 +144,23 @@ class Travaux_eleves:
     @property
     def resultat_pose(self):
         return self.__resultat_pose
+
+
+    def travaux_eleve(self): #Par Evan Lacombe
+        # permet d'ouvrir la bdd
+        cnx = sqlite3.connect('DVmath_exercice.db')
+        cursor = cnx.cursor()
+        # insertion des données
+        request_val = "INSERT INTO travaux_eleves (nom, niveau, calcul, calcul_pose, resultat, resultat_pose) VALUES (?,?,?,?,?,?)"
+        data = (self.__nom, self.__niveau,self.__calcul, self.__calcul_pose, self.__resultat, self.__resultat_pose)
+        cursor.execute(request_val, data)
+        resultat = cursor.fetchall()  # afficher plusieurs donnée en tableau
+        cnx.commit()
+        cursor.close()
+        cnx.close()
+
+        print("Acquis enregistrés")
+        return resultat #renvoie les données si besoin d'affichage
 
 
 # Fonctions
@@ -188,7 +199,7 @@ def pose_resultat(object):
 # Programme principal
 def main():
     # instanciation pour Eleves
-    eleve1 = Eleves("Riviere", "Marie", 5)  #instanciation classe avec de nouveau parametres
+    eleve1 = Eleves("Larue", "Dylan", 4)  #instanciation classe avec de nouveau parametres
 
     print("-----------------Eleves----------------")
     print(eleve1.nom, eleve1.prenom, eleve1.niveau)  # Affichage
@@ -198,7 +209,7 @@ def main():
     choisir_exo()  # Appel fonction qui permet de chosir un exercice
 
     print("---------------Ennoncé---------------")
-    exercice1 = Exercices("1", eleve1.niveau)  #instanciation de la classe
+    exercice1 = Exercices("2", eleve1.niveau)  #instanciation de la classe
 
     #appel de def_calcul pour modifier l'attribut calcul et resultat de exercice
     exercice1.def_calcul(exercice1.ennonce_calcul_bdd(), exercice1.affiche_resultat_bdd())
@@ -206,13 +217,18 @@ def main():
     print("calcul propose:", exercice1.calcul)  #affiche le calcul proposé
 
     print("----------Pose et verification------------")
-    pose_calcul(exercice1)  # verfication du calcul pose
+    calcul_pose = pose_calcul(exercice1)  # verfication du calcul pose
+
     print("---------------Resultat---------------")
-    pose_resultat(exercice1)
+    resultat_pose = pose_resultat(exercice1)
 
     print("------------Travaux_eleves------------")
-    # travaux = Travaux_eleves("Dupond", 6, "1+2", "1+2", 3, 3)
-    # print(travaux.nom, travaux.niveau, travaux.calcul, travaux.calcul_pose, travaux.resultat, travaux.resultat_pose)
+    #instanciation de la classe avec paramettre deja existant
+    travaux1 = Travaux_eleves(eleve1.nom, eleve1.niveau, exercice1.calcul, calcul_pose, exercice1.resultat, resultat_pose)
+
+    #appel de la fonction
+    travaux1.travaux_eleve()
+
 
 
 if __name__ == '__main__':
