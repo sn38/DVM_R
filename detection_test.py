@@ -10,6 +10,7 @@ Création: admin, le 02/03/2021
 import csv
 import subprocess
 import codecs
+import time
 #import RPi.GPIO as GPIO
 # Fonctions
 
@@ -79,6 +80,20 @@ def validationBP():
             print("Appui detécté")
             bp = 1
 
+
+def check_dico(dico, valres):
+    dictionnaire = dico
+    for key, value in dictionnaire.items():
+        seuil_bas = dictionnaire[key].get('sbas')
+        seuil_bas = int(seuil_bas)
+        seuil_haut = dictionnaire[key].get('shaut')
+        seuil_haut = int(seuil_haut)
+        #time.sleep(0.01)
+        if seuil_bas <= valres <= seuil_haut:
+            print(key, dictionnaire[key].get('caractere'))
+            break
+
+
 # Programme principal
 
 
@@ -89,6 +104,10 @@ def main():
     validation = False          # variable si calcul posé est juste
     exo = "1+1"                     # exo de test
     resultat = 1+1
+
+    #for key, value in dictionnaire.items():
+    #    print(key, dictionnaire[key].get('sbas'), dictionnaire[key].get('shaut'))
+    check_dico(dictionnaire, 880)
 
     while not validation:     # Boucle verification entrée juste
         print("Entrer",exo, ": ")       # print pour les tests
