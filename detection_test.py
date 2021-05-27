@@ -35,37 +35,37 @@ class CelluleBraille:
 		self.__valCH6 = valCH6
 		self.__valCH7 = valCH7
 
-	#@property
-	#def valCH0(self):
-	#	return self.__valCH0
+	@property
+	def valCH0(self):
+		return self.__valCH0
 
-	#@property
-	#def valCH1(self):
-	#	return self.__valCH1
+	@property
+	def valCH1(self):
+		return self.__valCH1
 
-	#@property
-	#def valCH2(self):
-	#	return self.__valCH2
+	@property
+	def valCH2(self):
+		return self.__valCH2
 
-	#@property
-	#def valCH3(self):
-	#	return self.__valCH3
+	@property
+	def valCH3(self):
+		return self.__valCH3
 
-	#@property
-	#def valCH4(self):
-	#	return self.__valCH4
+	@property
+	def valCH4(self):
+		return self.__valCH4
 
-	#@property
-	#def valCH5(self):
-	#	return self.__valCH5
+	@property
+	def valCH5(self):
+		return self.__valCH5
 
-	#@property
-	#def valCH6(self):
-	#	return self.__valCH6
+	@property
+	def valCH6(self):
+		return self.__valCH6
 
-	#@property
-	#def valCH7(self):
-	#	return self.__valCH7
+	@property
+	def valCH7(self):
+		return self.__valCH7
 
 	@classmethod
 	def create_SPI(cls):  # creation bus spi
@@ -122,8 +122,6 @@ def build_dico(file):       #construction du dictionnaire à partir du CSV
 	dialect = csv.Sniffer().sniff(file.readline())  # objet recap infos fichier csv (détermination séparateur sur ligne 0)
 	file.seek(0)    # retour ligne 0
 	caracteres = list(csv.DictReader(file, dialect=dialect))    # importation données sous forme liste
-	#print(caracteres[:15])
-	#dict = [elt['id'] for elt in caracteres]     # liste des valeurs de résistances
 	id = range(47)
 	dict_complet = dict(zip(id, caracteres))   # création du dictionnaire (association liste résistances à caractères)
 
@@ -140,36 +138,40 @@ def synthese_vocale(message):   # fonction de lecture via synthèse vocale
 		print("débug: Execution reussie")
 
 
-def validationBP():         #met en pause exec du code jusqu'à appui bouton
-	pinBtn = 19
-	GPIO.setmode(GPIO.BCM)
-	GPIO.setup(pinBtn, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
-	bp = 0
+def validationBP():         # met en pause exec du code jusqu'à appui bouton
+	pinBtn = 19		# Pin du bp sur le GPIO
+	GPIO.setmode(GPIO.BCM)		# pour reference GPIO 19 et pas pin 35
+	GPIO.setup(pinBtn, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)		# mise du GPIO 19 en input, activation res pull dwn
+	bp = 0		# set variable bascule
 	while bp == 0:
-		etat = GPIO.input(pinBtn)
-		if etat == 1:
-			print("débug: Appui detécté")
-			bp = 1
+		etat = GPIO.input(pinBtn)		# lecture de l'état du GPIO 19
+		if etat == 1:		# si niveau logique à 1
+			#print("débug: Appui detécté")
+			bp = 1		# bascule de la variable
 
 
-def check_dico(dico, valres):       #lecture du dictionnaire pour reconnaissance caractère
+def check_dico(dico, valres):       # lecture du dictionnaire pour reconnaissance caractère
 	for key, value in dico.items():
-		seuil_bas = dico[key].get('sbas')
-		seuil_bas = int(seuil_bas)
-		seuil_haut = dico[key].get('shaut')
-		seuil_haut = int(seuil_haut)
+		seuil_bas = dico[key].get('sbas')	 # lecture dictionnaire pour seuil bas
+		seuil_bas = int(seuil_bas)		# conversion en int
+		seuil_haut = dico[key].get('shaut')		# lecture dictionnaire pour seuil haut
+		seuil_haut = int(seuil_haut)		# conversion en int
 		if seuil_bas <= valres <= seuil_haut:
-			caractere = dico[key].get('caractere')
+			caractere = dico[key].get('caractere')		# lecture dictionnaire pour caractère
 			#print("débug: ", key, caractere)  # debug
 			return caractere
-			break
+	try:
+		caractere  # si variable caractere non créée
+	except NameError:
+		synthese_vocale("Erreur de détection!")  # lecture erreur
+		raise  # raise d'une erreur
 
 
 # Programme principal
 def main():
 	# ------------------initialisations----------------------------------
 	spi = CelluleBraille.create_SPI()      #creation bus spi
-	cs = CelluleBraille.create_CS()#creation chip select
+	cs = CelluleBraille.create_CS()		#creation chip select
 	mcp = CelluleBraille.create_MCP(spi, cs)   #creation objet mcp
 	Cellules = CelluleBraille()
 	dictionnaire = dico_csv()   # build du dictionnaire
@@ -185,7 +187,7 @@ def main():
 		synthese_vocale("Poser:") #coucou
 		synthese_vocale(exo)
 
-		validationBP()		# attente validation de l'élève
+		#validationBP()		# attente validation de l'élève
 
 		i = 0		# nombre d'itérations
 		Cellules.lire_Channel(mcp)		# lecture du mcp3008
@@ -241,8 +243,7 @@ def main():
 			chaineCaract = ""  # reset variable chaineCaract
 
 
-if __name__ == '__main__':
-	main()
+
 # Fin
 
 # https://www.youtube.com/watch?v=Hu4I3GAAOmA l15
