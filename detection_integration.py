@@ -449,7 +449,7 @@ def main():
 	# -----------------Programme principal--------------------------------
 	while not eleveValide:
 		eleve1 = Eleves("Dupond", "Pierre", 6)  # instanciation classe avec de nouveau parametres
-		enonceEleve = eleve1.nom + eleve1.prenom + str(eleve1.niveau)
+		enonceEleve = eleve1.nom + " " + eleve1.prenom + " " + str(eleve1.niveau)
 		synthese_vocale(enonceEleve)
 		existe = eleve1.verifier_eleve()  # Appel fonction de vérification
 		if existe == 1:
