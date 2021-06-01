@@ -378,16 +378,6 @@ def pose_calcul(exercice, cellule, dictionnaire, mcp):
 			chaineCaract = ""  # reset variable chaineCaract
 
 
-# calcul_pose = input("Poser le calcul > ")  # present pour le test !!
-# # calcul_pose = "32-14"
-# if calcul_pose == object.calcul:
-# 	print("Vous avez correctement ecrit le calcul : ", calcul_pose)
-# else:
-# 	print("Erreur")
-
-# return calcul_pose
-
-
 def pose_resultat(exercice, cellule, dictionnaire, mcp):
 	chaineCaract = ""
 	validation = False
@@ -423,15 +413,6 @@ def pose_resultat(exercice, cellule, dictionnaire, mcp):
 			chaineCaract = ""  # reset variable chaineCaract
 
 
-# resultat_pose = input("Poser le resultat >")
-# if resultat_pose == exercice.resultat:
-# 	print("Vous avez correctement posé le resultat : ", resultat_pose)
-# else:
-# 	print("Erreur")
-#
-# return resultat_pose
-
-
 # Programme principal
 def main():
 	# ------------------initialisations----------------------------------
@@ -440,11 +421,8 @@ def main():
 	mcp = CelluleBraille.create_MCP(spi, cs)  # creation objet mcp
 	Cellules = CelluleBraille()
 	dictionnaire = dico_csv()  # build du dictionnaire
-	# chaineCaract = ""  # définition chaine caractères vide
-	validation = False  # variable si calcul posé est juste
 	eleveValide = False
-	# exo = "1+1"  # exo de test
-	resultat = 2
+
 
 	# -----------------Programme principal--------------------------------
 	while not eleveValide:
@@ -467,66 +445,6 @@ def main():
 	travaux1 = \
 		Travaux_eleves(
 			eleve1.nom, eleve1.niveau, exercice1.calcul, calcul_pose, int(exercice1.resultat), int(resultat_pose))
-# # -----------------Pose calcul----------------------------------------
-# while not validation:  # Boucle verification entrée juste
-# 	print("débug: Entrer", exo, ": ")  # print pour les tests
-# 	synthese_vocale("Poser:")  # coucou
-# 	synthese_vocale(exercice1.calcul)
-#
-# 	# validationBP()		# attente validation de l'élève
-#
-# 	i = 0  # nombre d'itérations
-# 	Cellules.lire_Channel(mcp)  # lecture du mcp3008
-# 	for attr, value in Cellules.__dict__.items():  # Boucle reconnaissance entrée
-# 		val = value  # affectation valeur
-# 		print(val)  # débug
-# 		caract = check_dico(dictionnaire, val)  # correspondance avec le dictionnaire
-# 		chaineCaract = chaineCaract + caract  # concaténation caractères reconnus
-# 		i += 1  # incrémentation nombre d'itérations
-# 		if i == len(exercice1.calcul):  # si nombre d'itérations = longeur de exo
-# 			break  # sortie de la boucle
-#
-# 	if chaineCaract == exercice1.calcul:  # verfification si exo saisi par eleve identique a exo propose
-# 		validation = True  # changement etat pour sortie boucle de saisie
-# 		synthese_vocale(chaineCaract)
-# 		synthese_vocale("calcul posé juste.")
-# 		chaineCaract = ""  # reset variable chaineCaract
-#
-# 	else:  # si exo saisi incorrect
-# 		synthese_vocale(chaineCaract)
-# 		synthese_vocale("calcul posé faux.")
-# 		chaineCaract = ""  # reset variable chaineCaract
-#
-# # ----------------------Pose résultat---------------------------------
-# validation = False
-# while not validation:
-# 	synthese_vocale("Poser le résultat.")
-#
-# 	validationBP()  # attente validation de l'élève
-#
-# 	i = 0
-# 	Cellules.lire_Channel(mcp)
-# 	for attr, value in Cellules.__dict__.items():  # Boucle reconnaissance entrée
-# 		val = value  # affectation valeur
-# 		print(val)  # débug
-# 		caract = check_dico(dictionnaire, val)  # correspondance avec le dictionnaire
-# 		chaineCaract = chaineCaract + caract  # concaténation caractères reconnus
-# 		i += 1  # incrémentation nombre d'itérations
-# 		if i == len(str(resultat)):  # si nombre d'itérations = longeur du resultat
-# 			break  # sortie de la boucle
-#
-# 	if chaineCaract == str(resultat):  # verfification si resultat saisi par eleve identique a resultat propose
-# 		validation = True  # changement etat pour sortie boucle de saisie
-# 		synthese_vocale(chaineCaract)
-# 		synthese_vocale("Résultat juste.")
-# 		print("exercice juste")  # debug: affichage exercice juste
-# 		chaineCaract = ""  # reset variable chaineCaract
-#
-# 	else:  # si exo saisi incorrect
-# 		print("exercice faux")  # debug: affichage exo faux
-# 		synthese_vocale(chaineCaract)
-# 		synthese_vocale("calcul posé faux.")
-# 		chaineCaract = ""  # reset variable chaineCaract
 
 
 if __name__ == '__main__':
