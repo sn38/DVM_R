@@ -528,4 +528,7 @@ def main():
 # 		synthese_vocale("calcul posé faux.")
 # 		chaineCaract = ""  # reset variable chaineCaract
 
+
+if __name__ == '__main__':
+	main()
 # Fin
