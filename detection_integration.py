@@ -443,7 +443,8 @@ def main():
 
 	travaux1 = \
 		Travaux_eleves(
-			eleve1.nom, eleve1.niveau, exercice1.calcul, calcul_pose, exercice1.resultat, resultat_pose)
+			eleve1.nom, eleve1.niveau, exercice1.calcul, int(calcul_pose), exercice1.resultat, int(resultat_pose))
+	travaux1.travaux_eleve()
 
 
 if __name__ == '__main__':
