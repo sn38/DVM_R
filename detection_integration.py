@@ -5,7 +5,6 @@ Création: admin, le 02/03/2021
 """
 
 # Imports
-
 # pour traitement csv
 import csv
 # pour synthese vocale
@@ -444,7 +443,7 @@ def main():
 
 	travaux1 = \
 		Travaux_eleves(
-			eleve1.nom, eleve1.niveau, exercice1.calcul, calcul_pose, int(exercice1.resultat), int(resultat_pose))
+			eleve1.nom, eleve1.niveau, exercice1.calcul, calcul_pose, exercice1.resultat, resultat_pose)
 
 
 if __name__ == '__main__':
