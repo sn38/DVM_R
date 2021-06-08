@@ -368,7 +368,6 @@ def pose_calcul(exercice, cellule, dictionnaire, mcp):
 			validation = True  # changement etat pour sortie boucle de saisie
 			synthese_vocale(chaineCaract)
 			synthese_vocale("calcul posé juste.")
-			chaineCaract = ""  # reset variable chaineCaract
 			return chaineCaract
 
 		else:  # si exo saisi incorrect
@@ -402,8 +401,7 @@ def pose_resultat(exercice, cellule, dictionnaire, mcp):
 			synthese_vocale(chaineCaract)
 			synthese_vocale("Résultat juste.")
 			print("exercice juste")  # debug: affichage exercice juste
-			chaineCaract = ""  # reset variable chaineCaract
-			return chaineCaract
+			return float(chaineCaract)
 
 		else:  # si exo saisi incorrect
 			print("exercice faux")  # debug: affichage exo faux
@@ -441,9 +439,12 @@ def main():
 
 	resultat_pose = pose_resultat(exercice1, Cellules, dictionnaire, mcp)
 
+	print(calcul_pose)
+	print(resultat_pose)
+
 	travaux1 = \
 		Travaux_eleves(
-			eleve1.nom, eleve1.niveau, exercice1.calcul, int(calcul_pose), exercice1.resultat, int(resultat_pose))
+			eleve1.nom, eleve1.niveau, exercice1.calcul, calcul_pose, exercice1.resultat, resultat_pose)
 	travaux1.travaux_eleve()
 
 
