@@ -320,7 +320,7 @@ def build_dico(file):  # construction du dictionnaire à partir du CSV
 
 def synthese_vocale(message):  # fonction de lecture via synthèse vocale
 	commande = \
-		"espeak-ng -a 200 -v mb-fr1 -s 150 " + "\"" + message + "\"" + " --stdout | aplay"  # préparation de la commande
+		"espeak-ng -a 200 -v mb-fr1 -s 125 " + "\"" + message + "\"" + " --stdout | aplay"  # préparation de la commande
 	print(commande)  # debug: affichage de la commande avant exécution
 	resultat_exec = subprocess.run(
 		commande, shell=True)  # exécution de la commande dans shell et récup objet de subprocess
@@ -375,7 +375,7 @@ def choisir_exo(dictionnaire, cellule, mcp):
 			break  # sortie de la boucle
 	num_exo_int = int(num_exo)
 	if num_exo_int in range(1, 999):
-		print("Vous avez choisi l'exercice", num_exo)  # va affciher le numéro de l'exercice definis
+		# print("Vous avez choisi l'exercice", num_exo)  # va affciher le numéro de l'exercice definis
 		exo = "Exercice " + num_exo + " choisi"
 		synthese_vocale(exo)
 	else:
