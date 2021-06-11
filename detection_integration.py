@@ -177,11 +177,24 @@ class Exercices:
 	def resultat(self):
 		return self.__resultat
 
+	# def ennonce_calcul_bdd(self):  # en parametres passe le numero et le niveau
+	# 	cnx = sqlite3.connect('DVmath_exercice.db')  # acces base de donnée
+	# 	cursor = cnx.cursor()
+	# 	request_val = "SELECT exercice FROM exercices WHERE numero = ? and niveau = ?"  # requete
+	# 	data = (self.__numero, self.__niveau)
+	# 	cursor.execute(request_val, data)
+	# 	resultat = cursor.fetchall()  # afficher plusieurs donnée en tableau
+	# 	cursor.close()
+	# 	cnx.close()
+	#
+	# 	calcul_bdd = ''.join(resultat[0])  # conversion de la valeur à l'indice 0 du tuple en chaîne de caractères
+	# 	return calcul_bdd  # renvoie le calcul
+
 	def ennonce_calcul_bdd(self):  # en parametres passe le numero et le niveau
 		cnx = sqlite3.connect('DVmath_exercice.db')  # acces base de donnée
 		cursor = cnx.cursor()
-		request_val = "SELECT exercice FROM exercices WHERE numero = ? and niveau = ?"  # requete
-		data = (self.__numero, self.__niveau)
+		request_val = "SELECT exercice FROM exercices WHERE numero = ?"  # requete
+		data = (self.__numero)
 		cursor.execute(request_val, data)
 		resultat = cursor.fetchall()  # afficher plusieurs donnée en tableau
 		cursor.close()
@@ -208,6 +221,22 @@ class Exercices:
 		# print("Resultat du calcul:", resultat_bdd) #affiche le resultat de la requete
 
 		return resultat_bdd  # renvoie le calcul
+
+	# @classmethod
+	# def affiche_exercices_bdd(self, eleve):
+	# 	cnx = sqlite3.connect('DVmath_exercice.db')  # acces base de donnée
+	# 	cursor = cnx.cursor()
+	# 	request_val = "SELECT numero FROM exercices WHERE niveau = ?"  # requete
+	# 	data = (eleve)
+	# 	cursor.execute(request_val, data)
+	# 	exercices = cursor.fetchall()  # afficher plusieurs donnée en tableau
+	# 	cursor.close()
+	# 	cnx.close()
+	#
+	# 	exercices = ''.join(exercices[0])  # conversion de la valeur à l'indice 0 du tuple en chaîne de caractères
+	# 	# print("Resultat du calcul:", resultat_bdd) #affiche le resultat de la requete
+	#
+	# 	return exercices  # renvoie le calcul
 
 
 class Travaux_eleves:
@@ -330,12 +359,24 @@ def check_dico(dico, valres):  # lecture du dictionnaire pour reconnaissance car
 		raise  # raise d'une erreur
 
 
-def choisir_exo():
-	num_exo = 3
-	# print("Quel exercice souhaitez vous réaliser ? >", num_exo)
-	if num_exo in range(1, 999):
+def choisir_exo(dictionnaire, cellule, mcp):
+	num_exo = ""
+	synthese_vocale("Quel exercice souhaitez vous réaliser ?")
+	validationBP()
+	i = 0
+	cellule.lire_Channel(mcp)
+	for attr, value in cellule.__dict__.items():  # Boucle reconnaissance entrée
+		val = value  # affectation valeur
+		print(val)  # débug
+		caract = check_dico(dictionnaire, val)  # correspondance avec le dictionnaire
+		num_exo = num_exo + caract  # concaténation caractères reconnus
+		i += 1  # incrémentation nombre d'itérations
+		if i == 1:  # si nombre d'itérations = longeur du resultat
+			break  # sortie de la boucle
+	num_exo_int = int(num_exo)
+	if num_exo_int in range(1, 999):
 		print("Vous avez choisi l'exercice", num_exo)  # va affciher le numéro de l'exercice definis
-		exo = "Exercice" + str(num_exo) + "choisi"
+		exo = "Exercice " + num_exo + " choisi"
 		synthese_vocale(exo)
 	else:
 		# print("Erreur")
@@ -420,7 +461,6 @@ def main():
 	dictionnaire = dico_csv()  # build du dictionnaire
 	eleveValide = False
 
-
 	# -----------------Programme principal--------------------------------
 	while not eleveValide:
 		eleve1 = Eleves("Dupond", "Pierre", 6)  # instanciation classe avec de nouveau parametres
@@ -430,7 +470,7 @@ def main():
 		if existe == 1:
 			eleveValide = True
 
-	exercice1 = Exercices(str(choisir_exo()), eleve1.niveau)  # instanciation classe
+	exercice1 = Exercices(str(choisir_exo(dictionnaire, Cellules, mcp)), eleve1.niveau)  # instanciation classe
 
 	# appel de def_calcul pour modifier l'attribut calcul et resultat de exercice
 	exercice1.def_calcul(exercice1.ennonce_calcul_bdd(), exercice1.affiche_resultat_bdd())
