@@ -41,6 +41,7 @@ def build_dico(file):  # construction du dictionnaire à partir du CSV
 
 
 def check_dico(dico, valres):  # lecture du dictionnaire pour reconnaissance caractère
+    caractere = None
     for key, value in dico.items():
         seuil_bas = dico[key].get('sbas')   # obtention valeur de sbas
         seuil_bas = int(seuil_bas)  # conversion en int
@@ -48,14 +49,17 @@ def check_dico(dico, valres):  # lecture du dictionnaire pour reconnaissance car
         seuil_haut = int(seuil_haut)    # conversion en int
         if seuil_bas <= valres <= seuil_haut:   # si valeur donnée en paramètres comprise entre sbas et shaut
             caractere = dico[key].get('caractere')  # on récupère le caractère correspondant
-            #print("débug: ", caractere)  # debug
+            # print("débug: ", caractere)  # debug
             return caractere
-    try:
-        caractere   # si variable caractere non créée
-    except NameError:
-        print("erreur")
-        #synthese_vocale("Erreur de détection!")  # lecture erreur
-        raise  # raise d'une erreur
+    if caractere is None:
+        print("Erreur de détection!")
+        raise
+    # try:
+    #     caractere   # si variable caractere non créée
+    # except ValueError:
+    #     print("erreur")
+    #     #synthese_vocale("Erreur de détection!")  # lecture erreur
+    #     raise  # raise d'une erreur
 
 
 # Programme principal
