@@ -343,18 +343,16 @@ def validationBP():  # met en pause exec du code jusqu'à appui bouton
 
 
 def check_dico(dico, valres):  # lecture du dictionnaire pour reconnaissance caractère
+	caractere = None
 	for key, value in dico.items():
-		seuil_bas = dico[key].get('sbas')  # lecture dictionnaire pour seuil bas
+		seuil_bas = dico[key].get('sbas')  # obtention valeur seuil bas dico
 		seuil_bas = int(seuil_bas)  # conversion en int
-		seuil_haut = dico[key].get('shaut')  # lecture dictionnaire pour seuil haut
+		seuil_haut = dico[key].get('shaut')  # obtention valeur seuil haut dico
 		seuil_haut = int(seuil_haut)  # conversion en int
-		if seuil_bas <= valres <= seuil_haut:
+		if seuil_bas <= valres <= seuil_haut:	# si valeur donnée en paramètres comrpise entre sbas et shaut
 			caractere = dico[key].get('caractere')  # lecture dictionnaire pour caractère
-			# print("débug: ", key, caractere)  # debug
 			return caractere
-	try:
-		caractere  # si variable caractere non créée
-	except NameError:
+	if caractere is None:
 		synthese_vocale("Erreur de détection!")  # lecture erreur
 		raise  # raise d'une erreur
 
